@@ -3,10 +3,12 @@
 
     .venv/bin/python scripts/set_key.py SCRAPECREATORS_API_KEY        # paste when asked (hidden), then Enter
     .venv/bin/python scripts/set_key.py RADAR_DASHBOARD_PASSWORD --generate   # makes a strong password, shows it once
+    .venv/bin/python scripts/set_key.py RADAR_DASHBOARD_PASSWORD --generate --quiet   # same, without showing it
     printf %s "$VALUE" | .venv/bin/python scripts/set_key.py OPENROUTER_API_KEY   # for scripts and setup agents
 
 .env.local is created from .env.example if it doesn't exist, kept private to your user (chmod 600), and never
-committed (.gitignore). The value is never printed, except a password made with --generate, which you need to log in.
+committed (.gitignore). The value is never printed, except a password made with --generate (add --quiet when a setup
+agent runs it: the person then reads it from .env.local).
 """
 from __future__ import annotations
 
@@ -47,7 +49,10 @@ def main() -> int:
     if "--generate" in sys.argv:
         value = secrets.token_urlsafe(18)
         save(key, value)
-        print(f"{key} saved in .env.local. Your password (also in .env.local): {value}")
+        if "--quiet" in sys.argv:
+            print(f"{key} saved in {ENV} (not shown). It's the {key}= line in that file.")
+        else:
+            print(f"{key} saved in .env.local. Your password (also in .env.local): {value}")
         return 0
     if sys.stdin.isatty():
         value = getpass.getpass(f"Paste {key} (hidden), then press Enter: ")

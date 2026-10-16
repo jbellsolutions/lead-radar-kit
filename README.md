@@ -44,7 +44,7 @@ partnership outreach. It's off unless you turn it on.
 |---|---|---|
 | **ScrapeCreators key** ([scrapecreators.com](https://scrapecreators.com)) | Searching the platforms | 100 free credits to start, then about $10 per 5,000. One campaign run uses about 90–140 credits (roughly $0.20–0.30). |
 | **OpenRouter key** ([openrouter.ai](https://openrouter.ai)) | The AI that writes search plans and reads posts | Pay as you go: a few cents per run. Add a few dollars of credit. |
-| A computer with **Python 3.12 or newer** and **Git** | Running it | Free. The installer checks for them. |
+| A Mac or Linux computer (Windows: use WSL) with **Python 3.12 or newer** and **Git** | Running it | Free. The installer checks for them. |
 
 Optional extras:
 - **TypeSafe**: a fast first-pass AI reader.
@@ -89,6 +89,7 @@ Expect about $0.20–0.35 per campaign run, or about $6–10 a month for one dai
 ## Install by hand
 
 ```bash
+cd ~                                                                 # anywhere you won't move it from later
 git clone https://github.com/jbellsolutions/lead-radar-kit.git
 cd lead-radar-kit
 python3 -m venv .venv
@@ -98,7 +99,7 @@ python3 -m venv .venv
 .venv/bin/python scripts/set_key.py OPENROUTER_API_KEY
 .venv/bin/python scripts/set_key.py RADAR_DASHBOARD_PASSWORD --generate
 bin/radar doctor                                                     # checks your keys and credits
-bin/radar serve                                                      # http://localhost:8080
+bin/radar serve                                                      # http://localhost:8080 (--port 8090 if busy)
 ```
 
 To put it on Railway after that, run `railway login` and then `scripts/deploy_railway.sh`. See

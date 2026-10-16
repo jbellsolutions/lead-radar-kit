@@ -44,7 +44,7 @@ if [ "$UPDATE" = 0 ]; then
     say "Adding service '$SERVICE'"
     railway add --service "$SERVICE"
   fi
-  if ! railway volume list --service "$SERVICE" 2>/dev/null | grep -q "/data"; then
+  if ! railway volume --service "$SERVICE" list 2>/dev/null | grep -q "/data"; then
     say "Adding a disk (volume) at /data for the database"
     railway volume add --service "$SERVICE" --mount-path /data
   fi
