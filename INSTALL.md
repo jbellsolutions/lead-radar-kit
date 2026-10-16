@@ -260,6 +260,8 @@ You can also run campaigns from the command line. See [AGENTS.md](AGENTS.md).
 - **`doctor` shows `401` for ScrapeCreators or OpenRouter:** that key is wrong; set it again with `set_key.py`.
 - **`doctor` shows `out of credits`:** add credits at app.scrapecreators.com.
 - **Railway: `railway whoami` fails:** run `railway login` again.
+- **Railway: `railway init` asks for or fails on a workspace:** you have more than one. Run
+  `RAILWAY_WORKSPACE=<workspace name> scripts/deploy_railway.sh`.
 - **Railway: the deploy fails:** run `railway logs --service web` to see why. Then run `scripts/deploy_railway.sh --update`.
 - **Railway: the dashboard is empty after a redeploy:** the disk is missing. Check that `railway volume list` shows a
   volume mounted at `/data`.

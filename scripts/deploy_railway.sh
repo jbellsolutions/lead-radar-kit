@@ -33,20 +33,30 @@ for k in SCRAPECREATORS_API_KEY OPENROUTER_API_KEY RADAR_DASHBOARD_PASSWORD; do
   [ -n "$(value_of "$k")" ] || { echo "$k is empty in .env.local. Set it with: .venv/bin/python scripts/set_key.py $k"; exit 2; }
 done
 
+only_workspace() {  # your Railway workspace id when you have exactly one (railway init needs it outside a terminal)
+  railway whoami --json 2>/dev/null | python3 -c 'import json, sys
+w = json.load(sys.stdin).get("workspaces") or []
+print(w[0]["id"] if len(w) == 1 else "", end="")' 2>/dev/null || true
+}
+
 if [ "$UPDATE" = 0 ]; then
   if railway status >/dev/null 2>&1; then
     say "This folder is already linked to a Railway project; using it"
   else
+    WS="${RAILWAY_WORKSPACE:-$(only_workspace)}"
     say "Creating Railway project '$PROJECT'"
-    railway init --name "$PROJECT"
+    railway init --name "$PROJECT" ${WS:+--workspace "$WS"} || {
+      echo "If you have more than one Railway workspace, name one: RAILWAY_WORKSPACE=<name> scripts/deploy_railway.sh"
+      exit 2; }
   fi
   if ! railway service list 2>/dev/null | grep -qw "$SERVICE"; then
     say "Adding service '$SERVICE'"
     railway add --service "$SERVICE"
   fi
-  if ! railway volume --service "$SERVICE" list 2>/dev/null | grep -q "/data"; then
+  railway service link "$SERVICE" >/dev/null
+  if ! railway volume list 2>/dev/null | grep -q "/data"; then
     say "Adding a disk (volume) at /data for the database"
-    railway volume add --service "$SERVICE" --mount-path /data
+    railway volume add --mount-path /data
   fi
 fi
 
