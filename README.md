@@ -37,7 +37,8 @@ commission from Railway. It costs you nothing extra.
 - [ ] **Click [Deploy on Railway](https://railway.com/deploy/Cb06_G?referralCode=Q-Z5pZ&utm_medium=integration&utm_source=button&utm_campaign=lead-radar).** Sign up or sign in (GitHub sign-in is quickest), paste the two keys,
       and click **Deploy**. Your dashboard password is made for you.
 - [ ] **Open your dashboard.** In Railway, click the service, then **Settings → Networking** shows your
-      `...up.railway.app` address. The password is under **Variables → `RADAR_DASHBOARD_PASSWORD`**.
+      `...up.railway.app` address (if none shows, click **Generate Domain** there). The password is under
+      **Variables → `RADAR_DASHBOARD_PASSWORD`**.
 - [ ] **Run an example.** Your dashboard starts with six example campaigns: a virtual assistant, more leads and
       referrals, an SDR or appointment-setting partner, business funding, homeschool help, and a local trade. Click
       **Run now** on the one closest to you, or click **New campaign** and describe what you sell.

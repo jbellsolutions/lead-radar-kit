@@ -187,7 +187,7 @@ no-cost options.
 
 **The quickest way, no computer setup at all:** open the [Deploy on Railway](https://railway.com/deploy/Cb06_G?referralCode=Q-Z5pZ&utm_medium=integration&utm_source=button&utm_campaign=lead-radar) link, sign in, paste the two
 keys and click **Deploy**. Railway builds it, adds the `/data` disk and generates the password (the service's
-**Variables → `RADAR_DASHBOARD_PASSWORD`**). Your address is under the service's **Settings → Networking**. A setup
+**Variables → `RADAR_DASHBOARD_PASSWORD`**). Your address is under the service's **Settings → Networking**; if none shows, click **Generate Domain** there. A setup
 agent can't do this part, because it needs the person's Railway sign-in and their keys typed into Railway's page.
 
 **From this computer, with the code you just installed:**
