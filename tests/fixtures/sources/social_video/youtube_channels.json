@@ -1,0 +1,45 @@
+{
+ "UCharbor000000000000001": {
+  "success": true,
+  "credits_charged": 1,
+  "channelId": "UCharbor000000000000001",
+  "channel": "http://www.youtube.com/@HarborTools",
+  "name": "Harbor Tools",
+  "description": "Contractor tools since 2009. Site: https://www.harbortools.example",
+  "links": [
+   "https://www.harbortools.example"
+  ],
+  "store": "https://store.harbortools.example",
+  "country": "United States",
+  "email": null,
+  "subscriberCount": 4200
+ },
+ "UCcrownuk00000000000001": {
+  "success": true,
+  "credits_charged": 1,
+  "channelId": "UCcrownuk00000000000001",
+  "channel": "http://www.youtube.com/@CrownUK",
+  "name": "Crown UK Store",
+  "description": "",
+  "links": [],
+  "store": null,
+  "country": "United Kingdom",
+  "email": null,
+  "subscriberCount": 90
+ },
+ "UCember0000000000000001": {
+  "success": true,
+  "credits_charged": 1,
+  "channelId": "UCember0000000000000001",
+  "channel": "https://www.youtube.com/@EmberKitchen",
+  "name": "Ember Kitchen",
+  "description": "Kitchen tools. https://emberkitchen.example",
+  "links": [
+   "https://emberkitchen.example"
+  ],
+  "store": null,
+  "country": "United States",
+  "email": null,
+  "subscriberCount": 1500
+ }
+}

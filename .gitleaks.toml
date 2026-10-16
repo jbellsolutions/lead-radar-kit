@@ -1,0 +1,9 @@
+# gitleaks: the default rules, minus TikTok `url_key` lines in recorded test fixtures. Those values were replaced
+# with random-looking fakes by scripts/scrub_fixtures.py; they are file names, not credentials.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Scrubbed TikTok file keys in test fixtures"
+regexTarget = "line"
+regexes = ['''"url_key": "[a-z0-9_]+"''']

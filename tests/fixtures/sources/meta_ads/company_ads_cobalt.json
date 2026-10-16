@@ -1,0 +1,140 @@
+{
+ "success": true,
+ "credits_charged": 1,
+ "searchResultsCount": 3,
+ "cursor": "",
+ "results": [
+  {
+   "ad_archive_id": "9100000000000001",
+   "collation_count": 1,
+   "collation_id": "c9100000000000001",
+   "is_active": true,
+   "page_id": "5007",
+   "page_is_deleted": false,
+   "page_name": "Cobalt Goods",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1789887600,
+   "start_date_string": "2026-09-20T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9100000000000001",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5007",
+    "page_name": "Cobalt Goods",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Affiliates earn 12% on every order."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://www.cobaltgoods.example/affiliates",
+    "page_categories": [
+     "Outdoor equipment"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9100000000000002",
+   "collation_count": 1,
+   "collation_id": "c9100000000000002",
+   "is_active": true,
+   "page_id": "5007",
+   "page_is_deleted": false,
+   "page_name": "Cobalt Goods",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1785567600,
+   "start_date_string": "2026-08-01T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9100000000000002",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5007",
+    "page_name": "Cobalt Goods",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "New trail packs."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://www.cobaltgoods.example/shop",
+    "page_categories": [
+     "Outdoor equipment"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9100000000000003",
+   "collation_count": 1,
+   "collation_id": "c9100000000000003",
+   "is_active": true,
+   "page_id": "5007",
+   "page_is_deleted": false,
+   "page_name": "Cobalt Goods",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1785654000,
+   "start_date_string": "2026-08-02T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9100000000000003",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5007",
+    "page_name": "Cobalt Goods",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Links."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://linktr.ee/cobalt",
+    "page_categories": [
+     "Outdoor equipment"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  }
+ ]
+}

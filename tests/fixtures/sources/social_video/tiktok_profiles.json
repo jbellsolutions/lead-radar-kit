@@ -1,0 +1,68 @@
+{
+ "northwindlamps": {
+  "success": true,
+  "credits_charged": 1,
+  "user": {
+   "uniqueId": "northwindlamps",
+   "nickname": "Northwind Lamps",
+   "signature": "Warm light for every room.",
+   "verified": false,
+   "isOrganization": 1,
+   "ttSeller": false,
+   "commerceUserInfo": {
+    "commerceUser": false
+   },
+   "bioLink": {
+    "link": "https://www.northwind-lamps.example/",
+    "risk": 0
+   }
+  },
+  "stats": {
+   "followerCount": 5400
+  }
+ },
+ "ghostbrandco": {
+  "success": true,
+  "credits_charged": 1,
+  "user": {
+   "uniqueId": "ghostbrandco",
+   "nickname": "Ghost Brand",
+   "signature": "",
+   "verified": false,
+   "isOrganization": 0,
+   "ttSeller": false,
+   "commerceUserInfo": {
+    "commerceUser": false
+   },
+   "bioLink": {
+    "link": "",
+    "risk": 0
+   }
+  },
+  "stats": {
+   "followerCount": 300
+  }
+ },
+ "unlinkedco": {
+  "success": true,
+  "credits_charged": 1,
+  "user": {
+   "uniqueId": "unlinkedco",
+   "nickname": "Unlinked Co",
+   "signature": "Shop the drop",
+   "verified": false,
+   "isOrganization": 1,
+   "ttSeller": true,
+   "commerceUserInfo": {
+    "commerceUser": true
+   },
+   "bioLink": {
+    "link": "https://linktr.ee/unlinkedco",
+    "risk": 0
+   }
+  },
+  "stats": {
+   "followerCount": 800
+  }
+ }
+}

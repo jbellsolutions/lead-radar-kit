@@ -1,0 +1,258 @@
+{
+  "query": "virtual assistant",
+  "contract": "lead-intent.v1",
+  "cases": [
+    {
+      "id": "va-00",
+      "label": "high",
+      "post": {
+        "platform": "reddit",
+        "kind": "post",
+        "url": "https://example.com/fixture/va-00",
+        "author_handle": "fixture_00",
+        "text": "Anyone know a good VA? Need someone for inbox and scheduling ASAP. I run a two-person design studio and I'm losing hours every day to email.",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "buyer",
+        "tier": "high",
+        "need_summary": "Wants a VA for inbox and scheduling",
+        "evidence_quote": "Anyone know a good VA? Need someone for inbox and scheduling ASAP.",
+        "urgency": "now",
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "va-01",
+      "label": "high",
+      "post": {
+        "platform": "linkedin",
+        "kind": "post",
+        "url": "https://example.com/fixture/va-01",
+        "author_handle": "fixture_01",
+        "text": "Looking for recommendations: we're hiring a part-time virtual assistant to handle client onboarding and invoicing. Who have you worked with and loved?",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "buyer",
+        "tier": "high",
+        "need_summary": "Hiring a part-time VA for onboarding and invoicing",
+        "evidence_quote": "we're hiring a part-time virtual assistant to handle client onboarding and invoicing",
+        "urgency": "soon",
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "va-02",
+      "label": "high",
+      "post": {
+        "platform": "facebook",
+        "kind": "comment",
+        "url": "https://example.com/fixture/va-02",
+        "author_handle": "fixture_02",
+        "text": "Can anyone refer me to a reliable virtual assistant agency? My last VA quit and I need a replacement this week.",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "buyer",
+        "tier": "high",
+        "need_summary": "Needs a replacement VA agency referral",
+        "evidence_quote": "Can anyone refer me to a reliable virtual assistant agency?",
+        "urgency": "now",
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "va-03",
+      "label": "high",
+      "post": {
+        "platform": "youtube",
+        "kind": "comment",
+        "url": "https://example.com/fixture/va-03",
+        "author_handle": "fixture_03",
+        "text": "Great video. Honestly I need exactly this - where do I find a VA who can manage my Shopify customer emails? Drop names please.",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "buyer",
+        "tier": "high",
+        "need_summary": "Wants a VA for Shopify customer emails",
+        "evidence_quote": "where do I find a VA who can manage my Shopify customer emails?",
+        "urgency": "soon",
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "va-04",
+      "label": "medium",
+      "post": {
+        "platform": "reddit",
+        "kind": "post",
+        "url": "https://example.com/fixture/va-04",
+        "author_handle": "fixture_04",
+        "text": "Drowning in admin, thinking about hiring help but no idea where to start. Is it even worth it for a solo coach making under 10k a month?",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "buyer",
+        "tier": "medium",
+        "need_summary": "Overwhelmed by admin, considering hiring help",
+        "evidence_quote": "Drowning in admin, thinking about hiring help but no idea where to start.",
+        "urgency": "someday",
+        "confidence": 0.75
+      }
+    },
+    {
+      "id": "va-05",
+      "label": "medium",
+      "post": {
+        "platform": "threads",
+        "kind": "post",
+        "url": "https://example.com/fixture/va-05",
+        "author_handle": "fixture_05",
+        "text": "Spent my whole Sunday answering emails and chasing invoices again. There has to be a better way to run this business.",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "buyer",
+        "tier": "medium",
+        "need_summary": "Losing weekends to email and invoicing",
+        "evidence_quote": "Spent my whole Sunday answering emails and chasing invoices again.",
+        "urgency": "unknown",
+        "confidence": 0.75
+      }
+    },
+    {
+      "id": "va-06",
+      "label": "medium",
+      "post": {
+        "platform": "tiktok",
+        "kind": "comment",
+        "url": "https://example.com/fixture/va-06",
+        "author_handle": "fixture_06",
+        "text": "Comparing Upwork vs an agency for my first virtual assistant. Anyone have pros and cons?",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "buyer",
+        "tier": "medium",
+        "need_summary": "Evaluating options for a first VA",
+        "evidence_quote": "Comparing Upwork vs an agency for my first virtual assistant.",
+        "urgency": "soon",
+        "confidence": 0.75
+      }
+    },
+    {
+      "id": "va-07",
+      "label": "low",
+      "post": {
+        "platform": "linkedin",
+        "kind": "post",
+        "url": "https://example.com/fixture/va-07",
+        "author_handle": "fixture_07",
+        "text": "VAs are the future of small business. The founders who learn to delegate early win.",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "buyer",
+        "tier": "low",
+        "need_summary": "General opinion on VAs",
+        "evidence_quote": "VAs are the future of small business.",
+        "urgency": "unknown",
+        "confidence": 0.75
+      }
+    },
+    {
+      "id": "va-08",
+      "label": "low",
+      "post": {
+        "platform": "instagram",
+        "kind": "comment",
+        "url": "https://example.com/fixture/va-08",
+        "author_handle": "fixture_08",
+        "text": "Might look into getting a virtual assistant at some point next year. Not a priority right now, business is steady.",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "buyer",
+        "tier": "low",
+        "need_summary": "Casually considering a VA next year",
+        "evidence_quote": "Might look into getting a virtual assistant at some point next year.",
+        "urgency": "someday",
+        "confidence": 0.75
+      }
+    },
+    {
+      "id": "va-09",
+      "label": "seller",
+      "post": {
+        "platform": "facebook",
+        "kind": "post",
+        "url": "https://example.com/fixture/va-09",
+        "author_handle": "fixture_09",
+        "text": "I'm a VA with 5 open spots, DM me. Inbox, calendar, and social media management for coaches.",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "seller",
+        "tier": "none",
+        "need_summary": "",
+        "evidence_quote": "",
+        "urgency": "unknown",
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "va-10",
+      "label": "seller",
+      "post": {
+        "platform": "reddit",
+        "kind": "post",
+        "url": "https://example.com/fixture/va-10",
+        "author_handle": "fixture_10",
+        "text": "[FOR HIRE] Experienced virtual assistant, 6 years in e-commerce support. Rates start at $8/hr, portfolio available on request.",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "seller",
+        "tier": "none",
+        "need_summary": "",
+        "evidence_quote": "",
+        "urgency": "unknown",
+        "confidence": 0.9
+      }
+    },
+    {
+      "id": "va-11",
+      "label": "seller",
+      "post": {
+        "platform": "linkedin",
+        "kind": "post",
+        "url": "https://example.com/fixture/va-11",
+        "author_handle": "fixture_11",
+        "text": "Our agency places pre-vetted Filipino virtual assistants in 48 hours. Book a free discovery call today!",
+        "posted_at": "2026-09-25T12:00:00+00:00",
+        "source_term": "virtual assistant"
+      },
+      "expected": {
+        "role": "seller",
+        "tier": "none",
+        "need_summary": "",
+        "evidence_quote": "",
+        "urgency": "unknown",
+        "confidence": 0.9
+      }
+    }
+  ]
+}

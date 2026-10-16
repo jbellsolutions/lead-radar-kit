@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lead-radar"
+version = "2.0.0"
+description = "Lead Radar: finds people publicly asking for what you sell across social platforms and job boards. Never posts, comments, likes or DMs."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = ["pydantic>=2.7,<3", "httpx>=0.28,<1", "typer>=0.12,<1", "PyYAML>=6,<7", "jsonschema>=4.23,<5", "selectolax>=0.3.21,<1"]
+
+[project.optional-dependencies]
+export = ["openpyxl>=3.1,<4"]  # scripts/radar_export_sheet.py --xlsx
+server = ["starlette>=0.37,<1", "uvicorn>=0.30,<1"]  # hosted dashboard (lead_radar.server)
+dev = ["pytest>=8", "openpyxl>=3.1,<4", "starlette>=0.37,<1", "uvicorn>=0.30,<1"]
+
+[project.urls]
+Homepage = "https://github.com/jbellsolutions/lead-radar-kit"
+
+[project.scripts]
+radar = "lead_radar.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+lead_radar = ["migrations/*.sql", "dashboard.html"]
+
+[tool.pytest.ini_options]
+# src/ on the path explicitly: macOS/iCloud sets UF_HIDDEN on venv .pth files, which Python 3.12+ skips.
+pythonpath = ["src", "tests"]
+testpaths = ["tests"]

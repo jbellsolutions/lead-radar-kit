@@ -1,0 +1,107 @@
+{
+  "offer": "virtual assistant (remote admin, inbox, calendar, customer support help)",
+  "buyer_profile": "Solo founders, coaches, agency owners and small-business operators drowning in admin who want to hire or find a VA",
+  "need_statements": [
+    "need someone to answer my emails",
+    "looking for a virtual assistant",
+    "need help with scheduling and inbox",
+    "can anyone recommend a good VA",
+    "drowning in admin work",
+    "want to hire a VA but don't know where to start"
+  ],
+  "high_examples": [
+    "Anyone know a good VA? Need someone for inbox and scheduling ASAP.",
+    "Looking for recommendations: we're hiring a part-time virtual assistant for client onboarding."
+  ],
+  "medium_examples": [
+    "Drowning in admin, thinking about hiring help but no idea where to start.",
+    "Comparing Upwork vs an agency for my first virtual assistant."
+  ],
+  "low_examples": [
+    "VAs are the future of small business."
+  ],
+  "seller_signals": [
+    "I'm a VA",
+    "open spots",
+    "DM me for rates",
+    "for hire",
+    "book a discovery call",
+    "hire me",
+    "my services",
+    "accepting new clients",
+    "looking for work",
+    "portfolio"
+  ],
+  "terms": {
+    "reddit": [
+      "\"virtual assistant\" recommend",
+      "\"hire a VA\"",
+      "\"looking for a virtual assistant\"",
+      "\"need a virtual assistant\"",
+      "\"executive assistant\" recommendations",
+      "\"VA agency\""
+    ],
+    "youtube": [
+      "how to hire a virtual assistant",
+      "virtual assistant for small business",
+      "hiring my first VA"
+    ],
+    "tiktok": [
+      "hiring a virtual assistant",
+      "need a virtual assistant",
+      "#virtualassistant"
+    ],
+    "instagram": [
+      "hiring a virtual assistant",
+      "looking for a virtual assistant",
+      "#virtualassistant"
+    ],
+    "threads": [
+      "need a virtual assistant",
+      "looking for a VA",
+      "recommend a virtual assistant",
+      "hiring a VA",
+      "looking for a virtual assistant",
+      "VA agency recommendations"
+    ],
+    "linkedin": [
+      "looking for a virtual assistant",
+      "hiring a virtual assistant",
+      "recommend a virtual assistant",
+      "seeking a virtual assistant"
+    ],
+    "facebook": [],
+    "google": [
+      "\"need a virtual assistant\"",
+      "\"looking for a virtual assistant\"",
+      "\"recommend a virtual assistant\" site:reddit.com",
+      "\"looking for a VA\" site:x.com"
+    ],
+    "onlinejobs": [
+      "virtual assistant",
+      "executive assistant",
+      "admin assistant",
+      "customer support"
+    ],
+    "indeed": [
+      "virtual assistant",
+      "remote executive assistant"
+    ]
+  },
+  "communities": {
+    "reddit": [
+      "smallbusiness",
+      "Entrepreneur"
+    ],
+    "facebook": [
+      "https://www.facebook.com/groups/example-virtual-assistant-group"
+    ]
+  },
+  "negative_terms": [
+    "job",
+    "hiring me",
+    "I am a VA",
+    "VA course",
+    "become a virtual assistant"
+  ]
+}

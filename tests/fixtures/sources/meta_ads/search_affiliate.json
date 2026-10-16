@@ -1,0 +1,671 @@
+{
+ "success": true,
+ "credits_charged": 1,
+ "searchResultsCount": 15,
+ "cursor": "",
+ "searchResults": [
+  {
+   "ad_archive_id": "9000000000000001",
+   "collation_count": 1,
+   "collation_id": "c9000000000000001",
+   "is_active": true,
+   "page_id": "5001",
+   "page_is_deleted": false,
+   "page_name": "Acme Gear Co",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791442800,
+   "start_date_string": "2026-10-08T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000001",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5001",
+    "page_name": "Acme Gear Co",
+    "caption": "acmegear.com",
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Join our affiliate program and earn 15% commission on every sale. Apply in minutes."
+    },
+    "title": "Earn 15% Commission",
+    "link_description": "Join Our Affiliate Program",
+    "link_url": "https://shop.acmegear.com/affiliate",
+    "page_categories": [
+     "Sportswear"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [
+     "https://shop.acmegear.com/policies/privacy"
+    ],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000002",
+   "collation_count": 1,
+   "collation_id": "c9000000000000002",
+   "is_active": true,
+   "page_id": "5001",
+   "page_is_deleted": false,
+   "page_name": "Acme Gear Co",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1790319600,
+   "start_date_string": "2026-09-25T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000002",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5001",
+    "page_name": "Acme Gear Co",
+    "caption": "acmegear.com",
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Join our affiliate program for creators who want extra income."
+    },
+    "title": "Creator Partners",
+    "link_description": "",
+    "link_url": "https://shop.acmegear.com/pages/affiliates",
+    "page_categories": [
+     "Sportswear"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000011",
+   "collation_count": 1,
+   "collation_id": "c9000000000000011",
+   "is_active": false,
+   "page_id": "5001",
+   "page_is_deleted": false,
+   "page_name": "Acme Gear Co",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791529200,
+   "start_date_string": "2026-10-09T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000011",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5001",
+    "page_name": "Acme Gear Co",
+    "caption": "acmegear.com",
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Join our affiliate program (paused)."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://shop.acmegear.com/affiliate",
+    "page_categories": [
+     "Sportswear"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000003",
+   "collation_count": 1,
+   "collation_id": "c9000000000000003",
+   "is_active": true,
+   "page_id": "5002",
+   "page_is_deleted": false,
+   "page_name": "Vesper Ridge Capital",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791270000,
+   "start_date_string": "2026-10-06T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000003",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5002",
+    "page_name": "Vesper Ridge Capital",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Become an ISO partner. Merchant cash advance funding with broker support and residual income."
+    },
+    "title": "ISO Partner Program",
+    "link_description": "",
+    "link_url": "https://www.vesperridgecap.example/iso-partners",
+    "page_categories": [
+     "Financial Service"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000004",
+   "collation_count": 1,
+   "collation_id": "c9000000000000004",
+   "is_active": true,
+   "page_id": "5003",
+   "page_is_deleted": false,
+   "page_name": "Pat Example",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791356400,
+   "start_date_string": "2026-10-07T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000004",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5003",
+    "page_name": "Pat Example",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Join my affiliate program, use my code PAT10."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://www.examplestudio.com/affiliate",
+    "page_categories": [
+     "Digital Creator"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   },
+   "page_profile_uri": "https://www.facebook.com/synthetic.person.profile"
+  },
+  {
+   "ad_archive_id": "9000000000000005",
+   "collation_count": 1,
+   "collation_id": "c9000000000000005",
+   "is_active": true,
+   "page_id": "5004",
+   "page_is_deleted": false,
+   "page_name": "Orchid Labs",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791183600,
+   "start_date_string": "2026-10-05T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000005",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5004",
+    "page_name": "Orchid Labs",
+    "caption": "orchidlabs.com",
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Start earning with our referral program."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://af.uppromote.com/orchidlabs/register",
+    "page_categories": [
+     "Business"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000006",
+   "collation_count": 1,
+   "collation_id": "c9000000000000006",
+   "is_active": true,
+   "page_id": "5005",
+   "page_is_deleted": false,
+   "page_name": "Bankco Rewards",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791097200,
+   "start_date_string": "2026-10-04T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000006",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5005",
+    "page_name": "Bankco Rewards",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Refer a friend and get a $20 gift card."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://www.bankco.example/refer",
+    "page_categories": [
+     "Bank"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000007",
+   "collation_count": 1,
+   "collation_id": "c9000000000000007",
+   "is_active": true,
+   "page_id": "5006",
+   "page_is_deleted": false,
+   "page_name": "Casino Partner Hub",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791010800,
+   "start_date_string": "2026-10-03T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000007",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5006",
+    "page_name": "Casino Partner Hub",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Best casino affiliate program 50% revshare."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://casinohub.example/affiliate",
+    "page_categories": [
+     "Website"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000008",
+   "collation_count": 1,
+   "collation_id": "c9000000000000008",
+   "is_active": true,
+   "page_id": "5007",
+   "page_is_deleted": false,
+   "page_name": "Cobalt Goods",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1790924400,
+   "start_date_string": "2026-10-02T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000008",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5007",
+    "page_name": "Cobalt Goods",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Join our affiliate program and earn commission on every order."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://www.facebook.com/cobaltgoods",
+    "page_categories": [
+     "Outdoor equipment"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000009",
+   "collation_count": 1,
+   "collation_id": "c9000000000000009",
+   "is_active": true,
+   "page_id": "5008",
+   "page_is_deleted": false,
+   "page_name": "Juniper Golf",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1790838000,
+   "start_date_string": "2026-10-01T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000009",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5008",
+    "page_name": "Juniper Golf",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Brand ambassador application for our golf apparel brand."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://www.junipergolf.example/pages/ambassador-program",
+    "page_categories": [
+     "Clothing (Brand)"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000010",
+   "collation_count": 1,
+   "collation_id": "c9000000000000010",
+   "is_active": true,
+   "page_id": "5009",
+   "page_is_deleted": false,
+   "page_name": "Wellness Retreat Co",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791356400,
+   "start_date_string": "2026-10-07T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000010",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5009",
+    "page_name": "Wellness Retreat Co",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Recruiting Chicago wellness creators for an affiliate program tied to a wellness event."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://quietharbor.example/tickets/wellness",
+    "page_categories": [
+     "Health/beauty"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000012",
+   "collation_count": 1,
+   "collation_id": "c9000000000000012",
+   "is_active": true,
+   "page_id": "5010",
+   "page_is_deleted": false,
+   "page_name": "Old Brand Co",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1782889200,
+   "start_date_string": "2026-07-01T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000012",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5010",
+    "page_name": "Old Brand Co",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Join our affiliate program."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://oldbrand.example/affiliate",
+    "page_categories": [
+     "Clothing (Brand)"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000013",
+   "collation_count": 1,
+   "collation_id": "c9000000000000013",
+   "is_active": true,
+   "page_id": "5011",
+   "page_is_deleted": false,
+   "page_name": "Marigold Beauty",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791529200,
+   "start_date_string": "2026-10-09T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000013",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5011",
+    "page_name": "Marigold Beauty",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Affiliate program at 15% on referral sales for a beauty brand."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://marigoldbeauty.example/affiliate",
+    "page_categories": [
+     "Health/beauty"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000014",
+   "collation_count": 1,
+   "collation_id": "c9000000000000014",
+   "is_active": true,
+   "page_id": "5012",
+   "page_is_deleted": false,
+   "page_name": "Quillon Labs",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1791442800,
+   "start_date_string": "2026-10-08T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000014",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5012",
+    "page_name": "Quillon Labs",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Affiliate program open. Research peptides sold here."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://quillonlabs.example/affiliate",
+    "page_categories": [
+     "Health/beauty"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  },
+  {
+   "ad_archive_id": "9000000000000015",
+   "collation_count": 1,
+   "collation_id": "c9000000000000015",
+   "is_active": true,
+   "page_id": "5013",
+   "page_is_deleted": false,
+   "page_name": "Bramble Capital Holdings",
+   "publisher_platform": [
+    "FACEBOOK",
+    "INSTAGRAM"
+   ],
+   "start_date": 1790665200,
+   "start_date_string": "2026-09-29T07:00:00.000Z",
+   "end_date": null,
+   "end_date_string": null,
+   "url": "https://www.facebook.com/ads/library?id=9000000000000015",
+   "gated_type": "ELIGIBLE",
+   "categories": [
+    "UNKNOWN"
+   ],
+   "snapshot": {
+    "page_id": "5013",
+    "page_name": "Bramble Capital Holdings",
+    "caption": null,
+    "cta_text": "Sign up",
+    "cta_type": "SIGN_UP",
+    "body": {
+     "text": "Join our affiliate program for brokers: residual income on funded deals."
+    },
+    "title": "",
+    "link_description": "",
+    "link_url": "https://fb.me/bramble",
+    "page_categories": [
+     "Financial Service"
+    ],
+    "page_like_count": 1200,
+    "display_format": "IMAGE",
+    "extra_links": [],
+    "cards": [],
+    "videos": [],
+    "images": []
+   }
+  }
+ ]
+}

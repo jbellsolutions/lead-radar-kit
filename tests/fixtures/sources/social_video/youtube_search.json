@@ -1,0 +1,152 @@
+{
+ "success": true,
+ "credits_charged": 1,
+ "credits_remaining": 9000,
+ "videos": [
+  {
+   "type": "video",
+   "id": "AbCdEfGhIjK",
+   "url": "https://www.youtube.com/watch?v=AbCdEfGhIjK",
+   "title": "Introducing our affiliate program for contractors",
+   "thumbnail": "https://i.ytimg.com/vi/AbCdEfGhIjK/hq720.jpg",
+   "channel": {
+    "id": "UCharbor000000000000001",
+    "title": "Harbor Tools",
+    "handle": "@HarborTools",
+    "thumbnail": ""
+   },
+   "viewCountInt": 120,
+   "publishedTimeText": "3 days ago",
+   "publishedTime": "2026-10-06T03:00:00-07:00",
+   "lengthSeconds": 600,
+   "description": "Our affiliate program pays 25% recurring commission. Join our affiliate program at harbortools.example today.",
+   "commentCountInt": 2,
+   "likeCountInt": 9,
+   "publishDate": "2026-10-06T03:00:00-07:00",
+   "genre": "Education"
+  },
+  {
+   "type": "video",
+   "id": "ZyXwVuTsRqP",
+   "url": "https://www.youtube.com/watch?v=ZyXwVuTsRqP",
+   "title": "Our affiliate program is open",
+   "thumbnail": "https://i.ytimg.com/vi/ZyXwVuTsRqP/hq720.jpg",
+   "channel": {
+    "id": "UCharbor000000000000001",
+    "title": "Harbor Tools",
+    "handle": "@HarborTools",
+    "thumbnail": ""
+   },
+   "viewCountInt": 120,
+   "publishedTimeText": "3 days ago",
+   "publishedTime": "2026-10-01T10:00:00-07:00",
+   "lengthSeconds": 600,
+   "description": "Join our affiliate program. Our affiliate program is open for contractors.",
+   "commentCountInt": 2,
+   "likeCountInt": 9,
+   "publishDate": "2026-10-01T10:00:00-07:00",
+   "genre": "Education"
+  },
+  {
+   "type": "video",
+   "id": "SideHustle0A",
+   "url": "https://www.youtube.com/watch?v=SideHustle0A",
+   "title": "Make money with my affiliate link",
+   "thumbnail": "https://i.ytimg.com/vi/SideHustle0A/hq720.jpg",
+   "channel": {
+    "id": "UCside0000000000000001",
+    "title": "Side Hustle Hub",
+    "handle": "@SideHustleHub",
+    "thumbnail": ""
+   },
+   "viewCountInt": 120,
+   "publishedTimeText": "3 days ago",
+   "publishedTime": "2026-10-07T09:00:00-07:00",
+   "lengthSeconds": 600,
+   "description": "Make money with my affiliate link. Passive income for everyone! Join my team.",
+   "commentCountInt": 2,
+   "likeCountInt": 9,
+   "publishDate": "2026-10-07T09:00:00-07:00",
+   "genre": "Education"
+  },
+  {
+   "type": "video",
+   "id": "EmberTool01",
+   "url": "https://www.youtube.com/watch?v=EmberTool01",
+   "title": "Join our Ember Kitchen affiliate program: 15% commission",
+   "thumbnail": "https://i.ytimg.com/vi/EmberTool01/hq720.jpg",
+   "channel": {
+    "id": "UCember0000000000000001",
+    "title": "Ember Kitchen",
+    "handle": "@EmberKitchen",
+    "thumbnail": ""
+   },
+   "viewCountInt": 120,
+   "publishedTimeText": "3 days ago",
+   "publishedTime": "2026-10-02T12:00:00-07:00",
+   "lengthSeconds": 600,
+   "description": "Join our Ember Kitchen affiliate program and earn commission. Sign up at https://tracker.example/join?aff=ember123",
+   "commentCountInt": 2,
+   "likeCountInt": 9,
+   "publishDate": "2026-10-02T12:00:00-07:00",
+   "genre": "Education"
+  },
+  {
+   "type": "video",
+   "id": "CrownUK0001",
+   "url": "https://www.youtube.com/watch?v=CrownUK0001",
+   "title": "Join our affiliate program",
+   "thumbnail": "https://i.ytimg.com/vi/CrownUK0001/hq720.jpg",
+   "channel": {
+    "id": "UCcrownuk00000000000001",
+    "title": "Crown UK Store",
+    "handle": "@CrownUKStore",
+    "thumbnail": ""
+   },
+   "viewCountInt": 120,
+   "publishedTimeText": "3 days ago",
+   "publishedTime": "2026-10-05T12:00:00-07:00",
+   "lengthSeconds": 600,
+   "description": "Our affiliate program pays commission on every order.",
+   "commentCountInt": 2,
+   "likeCountInt": 9,
+   "publishDate": "2026-10-05T12:00:00-07:00",
+   "genre": "Education"
+  },
+  {
+   "type": "video",
+   "id": "OldVid00001",
+   "url": "https://www.youtube.com/watch?v=OldVid00001",
+   "title": "Our affiliate program",
+   "thumbnail": "https://i.ytimg.com/vi/OldVid00001/hq720.jpg",
+   "channel": {
+    "id": "UCold00000000000000001",
+    "title": "Old Channel",
+    "handle": "@OldChannel",
+    "thumbnail": ""
+   },
+   "viewCountInt": 120,
+   "publishedTimeText": "3 days ago",
+   "publishedTime": "2026-08-01T00:00:00-07:00",
+   "lengthSeconds": 600,
+   "description": "Join our affiliate program",
+   "commentCountInt": 2,
+   "likeCountInt": 9,
+   "publishDate": "2026-08-01T00:00:00-07:00",
+   "genre": "Education"
+  }
+ ],
+ "channels": [],
+ "playlists": [],
+ "lives": [],
+ "shorts": [
+  {
+   "type": "short",
+   "id": "ShortAAA111B",
+   "title": "Join our affiliate program",
+   "url": "https://www.youtube.com/shorts/ShortAAA111B",
+   "description": "Join our affiliate program"
+  }
+ ],
+ "continuationToken": null
+}

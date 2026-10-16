@@ -1,0 +1,161 @@
+# Affiliate/partner-program fingerprints for the program lane (lead_radar.programs).
+#
+# Only STRUCTURAL evidence names a platform: a portal URL carrying the company's id/slug, or a tracking-script
+# host. A page that merely mentions "ShareASale" in prose (lemlist's affiliate page names four networks) never
+# sets the platform. Verified against live pages on 2026-10-06 (M0): kit.com, notion.com, getresponse.com,
+# tidio.com, webflow.com, lemlist.com (PartnerStack); shopify.com, hubspot.com, allbirds.com (impact);
+# instantly.ai (Rewardful + PartnerStack); af.uppromote.com/<shop>/register (UpPromote).
+#
+# segment: the market the platform mostly serves; a hint, not a verdict.
+# portal: regexes whose first group is the company slug on the platform (also used to recognise portal URLs
+#         found by search, which are then resolved to the company's own domain).
+# script: regexes for tracking scripts / embeds that only a site running the program loads.
+
+platforms:
+  partnerstack:
+    segment: saas
+    portal:
+      - 'dash\.partnerstack\.com/application\?company=([a-z0-9_-]+)'
+      - '//([a-z0-9-]+)\.partnerstack\.com'
+    script:
+      - 'js\.partnerstack\.com'
+      - '//grsm\.io/'
+      - 'partnerlinks\.io'
+  rewardful:
+    segment: saas
+    portal:
+      - '//([a-z0-9-]+)\.getrewardful\.com'
+    script:
+      - 'r\.wdfl\.co/rw\.js'
+      - 'data-rewardful'
+  firstpromoter:
+    segment: saas
+    portal:
+      - '//([a-z0-9-]+)\.firstpromoter\.com'
+    script:
+      - 'cdn\.firstpromoter\.com'
+  tolt:
+    segment: saas
+    portal:
+      - '//([a-z0-9-]+)\.tolt\.io'
+    script:
+      - 'cdn\.tolt\.io/tolt\.js'
+  promotekit:
+    segment: saas
+    portal:
+      - '//([a-z0-9-]+)\.promotekit\.com'
+    script:
+      - 'cdn\.promotekit\.com'
+  tapfiliate:
+    segment: saas
+    portal:
+      - '//([a-z0-9-]+)\.tapfiliate\.com'
+    script:
+      - 'script\.tapfiliate\.com'
+  reditus:
+    segment: saas
+    portal: []
+    script:
+      - 'script\.getreditus\.com'
+  impact:
+    segment: mixed
+    portal:
+      - 'app\.impact\.com/campaign-(?:promo-signup|campaign-info-v2)/([A-Za-z0-9_-]+)\.brand'
+    script:
+      - 'utt\.impactcdn\.com'
+      - '\.sjv\.io/'
+      - 'impactradius-event\.com'
+  cj:
+    segment: ecommerce
+    portal:
+      - 'signup\.cj\.com/member/signup/publisher/\?cid=(\d+)'
+    script:
+      - 'emjcd\.com'
+  awin:
+    segment: ecommerce
+    portal:
+      - 'ui\.awin\.com/merchant-profile/(\d+)'
+      - 'awin1\.com/cread\.php\?awinmid=(\d+)'
+    script:
+      - 'dwin1\.com/'
+  shareasale:
+    segment: ecommerce
+    portal:
+      - 'shareasale\.com/shareasale\.cfm\?merchantID=(\d+)'
+      - 'shareasale\.com/join/\?merchantID=(\d+)'
+    script: []
+  refersion:
+    segment: ecommerce
+    portal:
+      - '//([a-z0-9-]+)\.refersion\.com'
+    script:
+      - 'refersion\.com/tracker'
+  uppromote:
+    segment: ecommerce
+    portal:
+      - 'af\.uppromote\.com/([a-z0-9_-]+)'
+    script: []
+  goaffpro:
+    segment: ecommerce
+    portal:
+      - '//([a-z0-9-]+)\.goaffpro\.com'
+    script:
+      - 'api\.goaffpro\.com/loader\.js'
+  clickbank:
+    segment: info
+    portal: []
+    script:
+      - '\.hop\.clickbank\.net'
+  affiliatewp:
+    segment: mixed
+    portal: []
+    script:
+      - '/wp-content/plugins/affiliate-wp/'
+  leaddyno:
+    segment: mixed
+    portal:
+      - '//([a-z0-9-]+)\.leaddyno\.com'
+    script:
+      - 'static\.leaddyno\.com/js'
+  postaffiliatepro:
+    segment: mixed
+    portal:
+      - '//([a-z0-9-]+)\.postaffiliatepro\.com'
+    script: []
+  trackdesk:
+    segment: mixed
+    portal: []
+    script:
+      - 'cdn\.trackdesk\.com'
+
+# Subdomains a platform uses for itself, never a company's portal.
+platform_subdomains: [www, app, api, dash, js, cdn, help, support, docs, blog, status, statuspage, market,
+                      marketplace, directory, skills, aeo, partners, academy, community, go, info, mail, ifo, bibi,
+                      landing, static, script, af]
+
+# Hosts that are never a prospect: the platforms themselves, aggregators, social, and big listicle publishers.
+excluded_hosts: [partnerstack.com, getrewardful.com, rewardful.com, firstpromoter.com, tolt.io, tolt.com,
+                 promotekit.com, tapfiliate.com, getreditus.com, impact.com, cj.com, awin.com, shareasale.com,
+                 refersion.com, uppromote.com, goaffpro.com, clickbank.com, clickbank.net, affiliatewp.com,
+                 leaddyno.com, postaffiliatepro.com, trackdesk.com, partnero.com, everflow.io, tune.com,
+                 getlasso.co, creator-hero.com, affilorama.com, linkedin.com, reddit.com, quora.com, medium.com,
+                 youtube.com, facebook.com, instagram.com, x.com, twitter.com, tiktok.com, pinterest.com,
+                 wikipedia.org, google.com, apple.com, myshopify.com, shopify.com, wordpress.com, zendesk.com,
+                 github.com, gstatic.com, googleapis.com, cloudflare.com, cloudfront.net, hcaptcha.com,
+                 fontawesome.com, jsdelivr.net, unpkg.com, typekit.net, hubspot.com, hsforms.com, stripe.com,
+                 intercom.io, gravatar.com, vimeo.com, wistia.com, calendly.com, trustpilot.com]
+
+# A page on an affiliate path whose text matches one of these, with no third-party platform, is an in-house
+# program (ClickFunnels: "Earn 30% Monthly Recurring Commission").
+commission_patterns:
+  - '\d{1,3}\s?%[^.]{0,40}\bcommissions?\b'
+  - '\bcommissions?\b[^.]{0,40}\d{1,3}\s?%'
+  - '\brecurring commissions?\b'
+  - '\$\s?\d[\d,.]*[^.]{0,30}\b(?:per|for (?:each|every))\s+(?:referral|sale|signup|sign-up|customer)\b'
+  - '\b(?:bounty|payout)\b[^.]{0,40}\$\s?\d'
+
+# Links on a homepage that point at the program page.
+program_link: '(?:affiliat|referral|refer-a-friend|ambassador|partner-program|partners/affiliate)'
+
+# Paths to try when the homepage links to nothing useful (/pages/... is Shopify's page route).
+guess_paths: [/affiliates, /affiliate, /affiliate-program, /pages/affiliates, /pages/affiliate, /partners, /referral]

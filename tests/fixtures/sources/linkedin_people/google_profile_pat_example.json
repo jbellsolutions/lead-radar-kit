@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "credits_charged": 1,
+  "results": [
+    {
+      "url": "https://www.linkedin.com/in/pat-example",
+      "title": "Pat Example - Founder at Acme | LinkedIn",
+      "description": "Founder @ Acme. · Experience: Acme · Location: Austin, Texas, United States"
+    },
+    {
+      "url": "https://www.linkedin.com/in/pat-example-other",
+      "title": "Pat Example - Consultant at Other Co | LinkedIn",
+      "description": "Consultant @ Other Co. · Experience: Other Co"
+    }
+  ]
+}

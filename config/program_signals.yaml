@@ -1,0 +1,99 @@
+# Growth signals and the finance list for the program lane (lead_radar.programs.signals).
+#
+# Built from public sources only: no LinkedIn login, no Sales Navigator, nothing that runs as anyone's account. What it searches:
+#   list 1 titles + "affiliate program" keywords -> affiliate-manager job posts, staff profiles, posts
+#   list 2 owner/funding titles + lending keywords -> funders/brokers by website, LinkedIn company page, profiles
+#   "our affiliate program" content search (past month) -> LinkedIn post search with a date window
+
+affiliate:
+  titles: ["Affiliate Manager", "Affiliate Marketing Manager", "Affiliate Program Manager", "Head of Affiliates",
+           "Partnerships Manager", "Director of Partnerships"]
+  # Job boards whose URLs name the hiring company. One query per title, date-windowed.
+  job_sites: [jobs.lever.co, boards.greenhouse.io, job-boards.greenhouse.io, jobs.ashbyhq.com, apply.workable.com,
+              linkedin.com/jobs/view]
+  staff_keywords: '"affiliate program" OR "affiliate partners" OR "affiliate marketing"'
+  post_queries: ['"our affiliate program"', '"join our affiliate program"', '"launched our affiliate program"',
+                 '"our partner program"', '"our referral program"', '"hiring an affiliate manager"',
+                 '"looking for affiliates"']
+  # A job counts as proof of an affiliate/partner program (even if the site check missed it) when its title matches;
+  # generic "strategic / state / media partnerships" roles are business development and only add a little.
+  program_job: '\b(?:affiliates?|referral|ambassadors?|influencer|creator (?:partnerships?|program)|partner (?:program|marketing|ecosystem|channel)|channel (?:partner|sales partner)|reseller|partnerships? (?:&|and) affiliates?)\b'
+  # A post counts as proof of a program when it names one outright.
+  program_post: '\b(?:affiliate|referral|ambassador|partner|creator|reseller) (?:program|programme)\b|\bjoin our (?:affiliates?|partners?)\b|\bbecome an? (?:affiliate|partner|ambassador)\b|\b(?:looking for|recruit(?:ing)?|seeking) (?:new )?(?:affiliates|ambassadors|referral partners)\b|\baffiliates to promote\b'
+  # A company post mentioning one of these counts as a program signal.
+  post_keywords: '\b(?:affiliate|referral|partner) (?:program|programme|partners?)\b|\baffiliates?\b|\bpartnerships?\b'
+
+finance:
+  titles: ["Owner", "Founder", "CEO", "President", "Managing Partner", "Loan Broker", "Funding Specialist",
+           "Business Funding Advisor"]
+  keywords: ["merchant cash advance", "business loans", "business funding", "SBA loans", "equipment financing",
+             "working capital"]
+  # The finance version of an affiliate program: funders recruiting ISOs, brokers and referral partners.
+  program_phrases: ['"ISO program"', '"broker program"', '"referral partner program"', '"become an ISO"',
+                    '"partner with us" "points"', '"refer a client" funding']
+  states: [Florida, New York, California, Texas, New Jersey, Illinois, Georgia, Arizona, Nevada, Utah, Colorado,
+           North Carolina, Pennsylvania, Ohio, Massachusetts]
+  # Company page / site text that marks a funder or broker (the list is finance only when one of these appears).
+  match: '\b(?:merchant cash advance|mca|business (?:loans?|funding|financing|capital)|sba(?: 7\(a\))? loans?|equipment financ\w+|working capital|revenue[- ]based financ\w+|lines? of credit|term loans?|small business (?:loans?|lending|funding)|commercial (?:lending|loans?|finance))\b'
+  program_link: '(?:iso|broker|partner|referral|refer-a|affiliate)'
+  program_text: '\b(?:iso|broker|referral|affiliate|partner)s? (?:partner )?program\b|\bbecome an? (?:iso|broker|partner)\b|\b\d{1,2}\s*(?:-|to|–)?\s*\d{0,2}\s*points\b|\bupfront commissions?\b|\bresidual commissions?\b'
+  direct_funder: '\bdirect (?:funder|lender)\b|\bwe fund\b|\bin-house underwriting\b'
+
+# Every other platform (src/lead_radar/programs/sources/<name>.py). Each source runs isolated within its own credit
+# cap per run; module DEFAULTS hold its queries, and keys here override them. Measured in the 2026-10-10 sweep
+# (verified precision): meta_ads 1.0, hiring_boards 0.89, finance_iso 0.63; the people/social/community sources are
+# lower and only list a company after it resolves to a US LinkedIn company page with program evidence.
+# Live results after build + adversarial review (2026-10-10), per daily run:
+#   meta_ads 17 brands / 21 credits (6 of 6 re-checked real); hiring_boards 10 / 6 credits (~0.8);
+#   reddit ~1 resolved company; social_meta 3 of 3 correct, low yield; community ~1 (HN is free);
+#   finance_iso 6 of 6 correct over 30 days but ~0 in a 3-day window -> backfill/weekly, not daily;
+#   linkedin_people 1 candidate / 12 credits with the wrong company; social_video 0 buyers -> off.
+sources:
+  meta_ads:        {enabled: true, credits: 30}   # brands running Meta ads to recruit affiliates / ISOs
+  hiring_boards:   {enabled: true, credits: 8, max_google_queries: 2}  # Built In + Time in Business free; Indeed/Upwork via Google
+  finance_iso:     {enabled: true, credits: 20, min_days: 14}  # funder ISO/broker pages + ISO posts: weekly (Monday 14-day run)
+  linkedin_people: {enabled: false, credits: 25}  # people posts resolved to their company: precision too low so far
+  reddit:          {enabled: true, credits: 10}   # founder threads, resolved via the product they name
+  social_meta:     {enabled: true, credits: 8}    # Instagram brand reels recruiting affiliates
+  social_video:    {enabled: false, credits: 15}  # TikTok / YouTube: 0 buyers in the live test
+  community:       {enabled: true, credits: 6}    # Hacker News (free), Indie Hackers, Product Hunt, Shopify Community
+
+lookalikes:
+  seeds_per_list: 40        # top companies per list whose LinkedIn "similar pages" are expanded, one hop
+  max_new: 300
+
+# Never list these companies (your own partners, clients and prospects). Names are matched against the company name
+# and page title. Replace the example with yours.
+do_not_prospect: ["Example Partner Funding"]
+
+# Excluded from both lists. Checked against the company name, LinkedIn industry, tagline and description.
+exclude:
+  # Verticals never listed.
+  verticals: '\b(?:casinos?|gambling|igaming|i-gaming|sportsbooks?|betting|poker|slots|adult|onlyfans|forex|fx trading|binary options|crypto(?:currency)? (?:trading|exchange)|prop firm|payday|revshare|research (?:use only|peptides?|chemicals?)|not for human consumption)\b'
+  # People who sell affiliate management, rather than run a program: agencies, networks, OPMs, freelancers.
+  # Checked on name + tagline; plus any agency/consultancy industry whose description is about affiliate work.
+  sellers: '\b(?:affiliate (?:marketing )?(?:agency|network|management (?:agency|company|services))|partner(?:ship)? (?:marketing )?agency|outsourced program management|opm\b|we help brands|helping (?:brands|businesses) (?:launch|grow|scale|manage))\b'
+  seller_industries: [Marketing Services, Advertising Services, Business Consulting and Services, Online Audio and Video Media]
+  seller_topic: '\b(?:affiliate|partner(?:ship)?s?|performance) marketing\b|\baffiliate programs?\b'
+  recruiters: '\b(?:recruit(?:ing|ment)|staffing|talent (?:acquisition|agency)|headhunt\w*|executive search)\b'
+  recruiter_industries: [Staffing and Recruiting, Human Resources Services]
+  # Affiliate list only: agencies and affiliate publishers sell marketing; they are not program owners to grow.
+  agency_industries: [Advertising Services, Marketing Services]
+  # Affiliate/referral/partner software, networks and PRMs: they sell the program, they don't run one to grow.
+  vendors: '\b(?:affiliate|referral|partner(?:ship)?|influencer|creator|ambassador) (?:marketing )?(?:software|platform|tracking|network|management (?:platform|software|tool)|automation|crm|prm|saas)\b|\bpartner relationship management\b|\bPRM\b'
+  vendor_names: [partnerstack, impact.com, rewardful, firstpromoter, tapfiliate, refersion, uppromote, goaffpro, everflow,
+                 tune.com, post affiliate pro, tolt, partnero, cello.so, reditus, trackdesk, affise, kiflo, crossbeam, introw,
+                 partnerpage, superfiliate, awin, shareasale, cj affiliate, rakuten advertising, flexoffers, leaddyno,
+                 referralcandy, friendbuy, extole, talkable, getambassador, social snowball, levanta, partnerize, affiliatly,
+                 referral rock, growsurf, viral loops, partnerfleet, scaleo, cake software, hasoffers, voluum, affiliatewp]
+  # Link shorteners / link-in-bio hosts are never a company's domain: follow the link, or leave it unresolved.
+  shorteners: [bit.ly, linktr.ee, lnkd.in, t.co, tinyurl.com, goo.gl, ow.ly, buff.ly, rebrand.ly, linkin.bio, beacons.ai,
+               bio.link, campsite.bio, carrd.co, msha.ke, tap.bio, solo.to, hoo.be, stan.store, bitly.com, cutt.ly, shorturl.at]
+  # Finance only: LinkedIn industries a funder or broker lists itself under (others are publishers, software,
+  # law firms, collectors...). Unknown industry passes; nonprofit (.org) lenders don't run ISO programs.
+  finance_industries: [Financial Services, Banking, Loan Brokers, Capital Markets, Credit Intermediation,
+                       Venture Capital and Private Equity Principals, Investment Management, Funds and Trusts,
+                       Business Consulting and Services, Investment Banking, Leasing Non-residential Real Estate,
+                       Equipment Rental Services]
+  # Finance only: vendors selling leads or software to funders, not funders/brokers.
+  finance_vendors: '\b(?:leads? generat\w+|mca leads|funding leads|lead vendor|crm for|software for lenders|loan origination software)\b'

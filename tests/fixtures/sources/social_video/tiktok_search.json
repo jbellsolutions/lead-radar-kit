@@ -1,0 +1,233 @@
+{
+ "success": true,
+ "credits_charged": 1,
+ "credits_remaining": 9000,
+ "search_item_list": [
+  {
+   "aweme_id": "7310000000000000001",
+   "desc": "Join our affiliate program and earn 20% commission on every sale. We're looking for creators to share Northwind!",
+   "desc_language": "en",
+   "region": "US",
+   "statistics": {
+    "play_count": 100,
+    "digg_count": 5,
+    "comment_count": 1
+   },
+   "author": {
+    "nickname": "Northwind Lamps",
+    "unique_id": "northwindlamps",
+    "follower_count": 1200,
+    "verification_type": 0,
+    "enterprise_verify_reason": "",
+    "custom_verify": ""
+   },
+   "create_time": 1791212400,
+   "is_ad": false,
+   "is_paid_partnership": false,
+   "create_time_utc": "2026-10-05T15:00:00.000Z",
+   "url": "https://www.tiktok.com/@northwindlamps/video/7310000000000000001",
+   "shop_product_url": null
+  },
+  {
+   "aweme_id": "7300000000000000002",
+   "desc": "Our affiliate program is open. Join us!",
+   "desc_language": "en",
+   "region": "US",
+   "statistics": {
+    "play_count": 100,
+    "digg_count": 5,
+    "comment_count": 1
+   },
+   "author": {
+    "nickname": "Northwind Lamps",
+    "unique_id": "northwindlamps",
+    "follower_count": 1200,
+    "verification_type": 0,
+    "enterprise_verify_reason": "",
+    "custom_verify": ""
+   },
+   "create_time": 1789916400,
+   "is_ad": false,
+   "is_paid_partnership": false,
+   "create_time_utc": "2026-09-20T15:00:00.000Z",
+   "url": "https://www.tiktok.com/@northwindlamps/video/7300000000000000002",
+   "shop_product_url": null
+  },
+  {
+   "aweme_id": "7320000000000000003",
+   "desc": "Use my code PAT10 and join my team, make money from home",
+   "desc_language": "en",
+   "region": "US",
+   "statistics": {
+    "play_count": 100,
+    "digg_count": 5,
+    "comment_count": 1
+   },
+   "author": {
+    "nickname": "Pat Example",
+    "unique_id": "pat.example",
+    "follower_count": 1200,
+    "verification_type": 0,
+    "enterprise_verify_reason": "",
+    "custom_verify": ""
+   },
+   "create_time": 1791385200,
+   "is_ad": false,
+   "is_paid_partnership": false,
+   "create_time_utc": "2026-10-07T15:00:00.000Z",
+   "url": "https://www.tiktok.com/@pat.example/video/7320000000000000003",
+   "shop_product_url": null
+  },
+  {
+   "aweme_id": "7330000000000000004",
+   "desc": "Join our affiliate program today and earn commission!",
+   "desc_language": "en",
+   "region": "GB",
+   "statistics": {
+    "play_count": 100,
+    "digg_count": 5,
+    "comment_count": 1
+   },
+   "author": {
+    "nickname": "Crownbridge Tea",
+    "unique_id": "crownbridgetea",
+    "follower_count": 1200,
+    "verification_type": 0,
+    "enterprise_verify_reason": "",
+    "custom_verify": ""
+   },
+   "create_time": 1791298800,
+   "is_ad": false,
+   "is_paid_partnership": false,
+   "create_time_utc": "2026-10-06T15:00:00.000Z",
+   "url": "https://www.tiktok.com/@crownbridgetea/video/7330000000000000004",
+   "shop_product_url": null
+  },
+  {
+   "aweme_id": "7340000000000000005",
+   "desc": "We're looking for ambassadors to join our ambassador family. Apply to join us and get a clothing credit.",
+   "desc_language": "en",
+   "region": "US",
+   "statistics": {
+    "play_count": 100,
+    "digg_count": 5,
+    "comment_count": 1
+   },
+   "author": {
+    "nickname": "Bloomhouse",
+    "unique_id": "bloomhouseco",
+    "follower_count": 1200,
+    "verification_type": 0,
+    "enterprise_verify_reason": "",
+    "custom_verify": ""
+   },
+   "create_time": 1791298800,
+   "is_ad": false,
+   "is_paid_partnership": false,
+   "create_time_utc": "2026-10-06T15:00:00.000Z",
+   "url": "https://www.tiktok.com/@bloomhouseco/video/7340000000000000005",
+   "shop_product_url": null
+  },
+  {
+   "aweme_id": "7350000000000000006",
+   "desc": "TikTok Shop affiliates wanted, join our TikTok shop affiliate program",
+   "desc_language": "en",
+   "region": "US",
+   "statistics": {
+    "play_count": 100,
+    "digg_count": 5,
+    "comment_count": 1
+   },
+   "author": {
+    "nickname": "Harbor Supply",
+    "unique_id": "harborsupplyco",
+    "follower_count": 1200,
+    "verification_type": 0,
+    "enterprise_verify_reason": "",
+    "custom_verify": ""
+   },
+   "create_time": 1791126000,
+   "is_ad": false,
+   "is_paid_partnership": false,
+   "create_time_utc": "2026-10-04T15:00:00.000Z",
+   "url": "https://www.tiktok.com/@harborsupplyco/video/7350000000000000006",
+   "shop_product_url": null
+  },
+  {
+   "aweme_id": "7360000000000000007",
+   "desc": "Join our affiliate program for everyone",
+   "desc_language": "en",
+   "region": "US",
+   "statistics": {
+    "play_count": 100,
+    "digg_count": 5,
+    "comment_count": 1
+   },
+   "author": {
+    "nickname": "Old Brand",
+    "unique_id": "oldbrandco",
+    "follower_count": 1200,
+    "verification_type": 0,
+    "enterprise_verify_reason": "",
+    "custom_verify": ""
+   },
+   "create_time": 1785596400,
+   "is_ad": false,
+   "is_paid_partnership": false,
+   "create_time_utc": "2026-08-01T15:00:00.000Z",
+   "url": "https://www.tiktok.com/@oldbrandco/video/7360000000000000007",
+   "shop_product_url": null
+  },
+  {
+   "aweme_id": "7370000000000000008",
+   "desc": "Join our affiliate program and earn commission",
+   "desc_language": "en",
+   "region": "US",
+   "statistics": {
+    "play_count": 100,
+    "digg_count": 5,
+    "comment_count": 1
+   },
+   "author": {
+    "nickname": "Ghost Brand",
+    "unique_id": "ghostbrandco",
+    "follower_count": 1200,
+    "verification_type": 0,
+    "enterprise_verify_reason": "",
+    "custom_verify": ""
+   },
+   "create_time": 1791126000,
+   "is_ad": false,
+   "is_paid_partnership": false,
+   "create_time_utc": "2026-10-04T15:00:00.000Z",
+   "url": "https://www.tiktok.com/@ghostbrandco/video/7370000000000000008",
+   "shop_product_url": null
+  },
+  {
+   "aweme_id": "7380000000000000009",
+   "desc": "Now accepting affiliates. Join our affiliate program.",
+   "desc_language": "en",
+   "region": "US",
+   "statistics": {
+    "play_count": 100,
+    "digg_count": 5,
+    "comment_count": 1
+   },
+   "author": {
+    "nickname": "Unlinked Co",
+    "unique_id": "unlinkedco",
+    "follower_count": 1200,
+    "verification_type": 0,
+    "enterprise_verify_reason": "",
+    "custom_verify": ""
+   },
+   "create_time": 1791039600,
+   "is_ad": false,
+   "is_paid_partnership": false,
+   "create_time_utc": "2026-10-03T15:00:00.000Z",
+   "url": "https://www.tiktok.com/@unlinkedco/video/7380000000000000009",
+   "shop_product_url": null
+  }
+ ],
+ "cursor": 30
+}

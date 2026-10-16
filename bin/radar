@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Lead Radar CLI wrapper. Puts src/ on the path explicitly (macOS/iCloud hides venv .pth files).
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PYTHONPATH="$ROOT/src${PYTHONPATH:+:$PYTHONPATH}" exec "$ROOT/.venv/bin/python" -m lead_radar.cli "$@"

@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+.venv/
+.git/
+.claude/
+.ai-worktrees/
+**/__pycache__/
+*.sqlite
+*.sqlite3
+*.db
+tests/
+docs/

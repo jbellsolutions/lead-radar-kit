@@ -1,0 +1,1163 @@
+<title>Lead Radar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: ops console. Top bar with radar picker → stats strip → two charts → filterable lead list → run log → caveats. */
+:root {
+  --bg: #eef1f4; --surface: #ffffff; --ink: #15202b; --muted: #586674; --line: #d6dde4;
+  --accent: #1d5aa6; --accent-soft: #e3ecf7;
+  --t-high: #1b4c8c; --t-medium: #5d8fcf; --t-low: #b7cdea;
+  --warn-fg: #8a5a00; --warn-bg: #fdf0d3; --ok-fg: #1d6b3a; --ok-bg: #dff2e6; --bad-fg: #9b2c2c; --bad-bg: #fbe3e3;
+  --display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0e151d; --surface: #151f2a; --ink: #e4eaf0; --muted: #93a2b1; --line: #253241;
+  --accent: #7eaaf0; --accent-soft: #1b2b3f;
+  --t-high: #93bdf5; --t-medium: #4f7fbf; --t-low: #2c4767;
+  --warn-fg: #f1c56d; --warn-bg: #352a12; --ok-fg: #7fd69c; --ok-bg: #16301f; --bad-fg: #f19a9a; --bad-bg: #3a1a1a;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0e151d; --surface: #151f2a; --ink: #e4eaf0; --muted: #93a2b1; --line: #253241;
+  --accent: #7eaaf0; --accent-soft: #1b2b3f;
+  --t-high: #93bdf5; --t-medium: #4f7fbf; --t-low: #2c4767;
+  --warn-fg: #f1c56d; --warn-bg: #352a12; --ok-fg: #7fd69c; --ok-bg: #16301f; --bad-fg: #f19a9a; --bad-bg: #3a1a1a;
+  color-scheme: dark }
+
+* { box-sizing: border-box }
+[hidden] { display: none !important }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); margin: 0 }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 48px; display: grid; gap: 22px }
+h1, h2, h3 { margin: 0; text-wrap: balance }
+h1 { font: 600 1.7rem/1.1 var(--display); letter-spacing: .01em }
+h2 { font: 600 1.15rem/1.2 var(--display); letter-spacing: .02em }
+.label { font: 500 .72rem/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted) }
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums }
+a { color: var(--accent) }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+
+.top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px }
+.top .query { color: var(--muted); margin-top: 4px }
+select, input[type="search"] { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 6px 10px; min-width: 0; max-width: 100% }
+.field { display: grid; gap: 4px }
+.status { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; color: var(--muted); font-size: .9rem; margin: 0 }
+.pill { display: inline-block; font: 500 .72rem/1 var(--mono); text-transform: uppercase; letter-spacing: .06em;
+  padding: 5px 8px; border-radius: 999px }
+.pill.warn { color: var(--warn-fg); background: var(--warn-bg) }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: var(--r); overflow: hidden }
+.stat { background: var(--surface); padding: 14px 16px; display: grid; gap: 6px; align-content: start }
+.stat .big { font: 500 1.6rem/1 var(--mono); font-variant-numeric: tabular-nums }
+.stat .small { color: var(--muted); font-size: .82rem }
+.split { display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--line) }
+.split span { display: block; height: 100% }
+
+.charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid;
+  gap: 14px; min-width: 0; align-content: start }
+.panel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px }
+.legend { display: flex; gap: 12px; font-size: .8rem; color: var(--muted) }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px }
+.t-high { background: var(--t-high) } .t-medium { background: var(--t-medium) } .t-low { background: var(--t-low) }
+
+.hbars { display: grid; gap: 8px }
+.hbar { display: grid; grid-template-columns: 84px 1fr 36px; align-items: center; gap: 10px; font-size: .88rem }
+.hbar .track { display: flex; height: 16px; background: var(--bg); border-radius: 3px; overflow: hidden }
+.hbar .track span { height: 100% }
+.hbar .n { text-align: right }
+
+.cols { display: grid; grid-template-columns: 34px 1fr; gap: 8px; height: 190px }
+.yaxis { display: flex; flex-direction: column; justify-content: space-between; text-align: right; font-size: .72rem; color: var(--muted);
+  padding-bottom: 20px }
+.plot { position: relative; display: flex; align-items: stretch; gap: 3px; min-width: 0;
+  background: linear-gradient(var(--line), var(--line)) 0 0 / 100% 1px no-repeat,
+              linear-gradient(var(--line), var(--line)) 0 calc(50% - 10px) / 100% 1px no-repeat;
+  padding-bottom: 20px }
+.col { flex: 1 1 0; min-width: 4px; max-width: 44px; display: flex; flex-direction: column; justify-content: flex-end; position: relative;
+  cursor: pointer; border-radius: 2px 2px 0 0 }
+.col:hover, .col.on { background: var(--accent-soft) }
+.col span { display: block; width: 100% }
+.col .x { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: .68rem; color: var(--muted);
+  white-space: nowrap }
+.empty { color: var(--muted); font-size: .9rem; padding: 12px 0 }
+
+.filters { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end }
+.chips { display: flex; gap: 6px; flex-wrap: wrap }
+.chip { font: 500 .85rem/1 var(--body); padding: 7px 11px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); cursor: pointer; display: inline-flex; gap: 6px; align-items: center }
+.chip[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft) }
+.chip .num { color: var(--muted); font-size: .78rem }
+.grow { flex: 1 1 200px; min-width: 0 }
+.grow input { width: 100% }
+.btn { font: 500 .88rem/1 var(--body); padding: 8px 12px; border-radius: var(--r); border: 1px solid var(--line);
+  background: var(--surface); color: var(--ink); cursor: pointer }
+.btn:hover { border-color: var(--accent) }
+
+.leads { display: grid; border-top: 1px solid var(--line) }
+.lead { display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 6px 18px; padding-block: 16px;
+  border-bottom: 1px solid var(--line) }
+.lead .meta { display: grid; gap: 5px; align-content: start; font-size: .82rem; color: var(--muted) }
+.tier { justify-self: start; font: 600 .7rem/1 var(--mono); text-transform: uppercase; letter-spacing: .07em; padding: 4px 7px;
+  border-radius: 3px; border-left: 4px solid }
+.tier.high { border-color: var(--t-high); background: var(--accent-soft); color: var(--ink) }
+.tier.medium { border-color: var(--t-medium); background: var(--accent-soft); color: var(--ink) }
+.tier.low { border-color: var(--t-low); background: transparent; color: var(--muted); border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line) }
+.lead h3 { font: 600 1rem/1.35 var(--body) }
+.lead blockquote { margin: 6px 0 0; padding-left: 12px; border-left: 2px solid var(--line); font-style: italic;
+  overflow-wrap: anywhere; max-width: 75ch }
+.lead details { margin-top: 6px; font-size: .86rem; color: var(--muted); max-width: 75ch; overflow-wrap: anywhere }
+.lead summary { cursor: pointer }
+.lead .foot { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; font-size: .82rem; color: var(--muted) }
+.lead .foot a { font-weight: 500 }
+.plat { font: 600 .66rem/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 2px 5px;
+  border: 1px solid var(--line); color: var(--muted); white-space: nowrap }
+.sigs { margin: 6px 0 0; padding-left: 18px; font-size: .86rem; display: grid; gap: 3px; max-width: 90ch; overflow-wrap: anywhere }
+.cbadge { font: 600 .7rem/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 4px 8px; border-radius: 999px;
+  border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer }
+.cbadge.verified { color: var(--ok-fg); background: var(--ok-bg); border-color: transparent }
+.cbadge.accept_all, .cbadge.pending { color: var(--warn-fg); background: var(--warn-bg); border-color: transparent }
+.cbadge.failed { color: var(--bad-fg); background: var(--bad-bg); border-color: transparent }
+dialog.card { width: min(520px, calc(100vw - 32px)); border: 1px solid var(--line); border-radius: var(--r); padding: 0;
+  background: var(--surface); color: var(--ink) }
+dialog.card::backdrop { background: rgb(0 0 0 / .45) }
+.card-body { padding: 18px; display: grid; gap: 12px }
+.card-row { display: grid; grid-template-columns: 96px 1fr auto; gap: 4px 10px; align-items: start; border-top: 1px solid var(--line); padding-top: 10px }
+.card-row .v { overflow-wrap: anywhere; font-weight: 500 }
+.card-row .s { grid-column: 2 / 4; color: var(--muted); font-size: .8rem }
+.card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px }
+.more { justify-self: start; margin-top: 12px }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface) }
+table { border-collapse: collapse; width: 100%; font-size: .86rem }
+th, td { padding: 8px 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line) }
+th { font: 500 .7rem/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--bg) }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left }
+tbody tr { cursor: pointer }
+tbody tr:hover, tbody tr.on { background: var(--accent-soft) }
+tbody tr:last-child td { border-bottom: 0 }
+td.num { font-family: var(--mono) }
+.zero { color: var(--muted) }
+
+.caveats { color: var(--muted); font-size: .86rem; margin: 0; padding-left: 18px; display: grid; gap: 4px; max-width: 90ch }
+
+.top-right { display: flex; flex-wrap: wrap; align-items: end; gap: 12px 16px }
+.tabs { display: flex; gap: 2px; background: var(--line); padding: 2px; border-radius: 8px }
+.tabs button { font: 600 .9rem/1 var(--body); padding: 9px 16px; border: 0; border-radius: 6px; background: transparent;
+  color: var(--muted); cursor: pointer }
+.tabs button[aria-selected="true"] { background: var(--surface); color: var(--ink) }
+.view { display: grid; gap: 22px }
+.small-btn { padding: 5px 9px; font-size: .8rem; margin-left: auto }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); font-weight: 600 }
+.btn.primary:hover { filter: brightness(1.08) }
+.btn.ghost { background: transparent }
+.btn:disabled { opacity: .55; cursor: not-allowed }
+textarea, .cform input { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 8px 10px; width: 100%; min-width: 0; resize: vertical }
+textarea:disabled, .cform input:disabled { background: var(--bg); color: var(--muted) }
+.cform { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 16px }
+.span2 { grid-column: 1 / -1 }
+.check { display: flex; gap: 8px; align-items: center; font-size: .9rem; cursor: pointer }
+.check input { width: 16px; height: 16px; accent-color: var(--accent) }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center }
+.hint { color: var(--muted); font-size: .85rem; margin: 0 }
+.plan { display: grid; gap: 14px; border-top: 1px solid var(--line); padding-top: 16px }
+.plan h3 { font: 600 1.05rem/1.2 var(--display); letter-spacing: .02em }
+.plan details { font-size: .88rem; color: var(--muted) }
+.plan summary { cursor: pointer }
+.needs { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 2px }
+.terms { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px 16px }
+.terms textarea { font: .86rem/1.45 var(--mono) }
+.msg { margin: 0; padding: 10px 12px; border-radius: var(--r); background: var(--accent-soft); font-size: .9rem }
+.msg.bad { background: var(--warn-bg); color: var(--warn-fg) }
+.clist, .jlist { display: grid; border-top: 1px solid var(--line) }
+.camp { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 20px; padding-block: 14px;
+  border-bottom: 1px solid var(--line); align-items: center }
+.camp h3 { font: 600 1rem/1.3 var(--mono) }
+.camp .q { margin: 2px 0 0; overflow-wrap: anywhere }
+.camp .meta, .job .meta { color: var(--muted); font-size: .82rem; margin: 2px 0 0 }
+.camp-leads { display: grid; justify-items: end; gap: 2px }
+.camp-leads .big { font: 500 1.4rem/1 var(--mono) }
+.camp-leads .small { color: var(--muted); font-size: .78rem }
+.camp-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; align-items: center }
+.camp-actions .check { margin-right: 6px }
+.job { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 4px 14px; padding-block: 12px;
+  border-bottom: 1px solid var(--line); align-items: start }
+.job-main { display: grid; gap: 2px; min-width: 0 }
+.job pre { font: .76rem/1.45 var(--mono); background: var(--bg); padding: 10px; border-radius: var(--r); overflow-x: auto;
+  max-height: 320px; white-space: pre-wrap; overflow-wrap: anywhere; margin: 6px 0 0 }
+.job summary { cursor: pointer; color: var(--muted); font-size: .82rem }
+.jstatus { justify-self: start; font: 600 .7rem/1 var(--mono); text-transform: uppercase; letter-spacing: .06em;
+  padding: 5px 7px; border-radius: 3px; background: var(--bg); color: var(--muted); border: 1px solid var(--line) }
+.jstatus.running, .jstatus.queued { background: var(--accent-soft); color: var(--accent); border-color: var(--accent) }
+.jstatus.done { color: var(--ink) }
+.jstatus.failed, .jstatus.interrupted, .jstatus.skipped { background: var(--warn-bg); color: var(--warn-fg); border-color: transparent }
+@media (max-width: 640px) {
+  .cform { grid-template-columns: 1fr }
+  .camp { grid-template-columns: 1fr }
+  .camp-leads { justify-items: start }
+  .job { grid-template-columns: 1fr }
+}
+
+@media (max-width: 640px) {
+  .lead { grid-template-columns: 1fr }
+  .lead .meta { grid-auto-flow: column; justify-content: start; align-items: center; gap: 10px }
+  .hbar { grid-template-columns: 72px 1fr 30px }
+}
+@media (prefers-reduced-motion: no-preference) { .col span, .hbar .track span { transition: height .2s, width .2s } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Lead Radar</h1>
+      <div class="query" id="query"></div>
+    </div>
+    <div class="top-right">
+      <nav class="tabs" id="tabs" role="tablist" aria-label="Views" hidden>
+        <button type="button" role="tab" id="tab-stats" aria-selected="true" aria-controls="view-stats">Stats</button>
+        <button type="button" role="tab" id="tab-jobs" aria-selected="false" aria-controls="view-jobs">Job leads</button>
+        <button type="button" role="tab" id="tab-programs" aria-selected="false" aria-controls="view-programs" hidden>Affiliate programs</button>
+        <button type="button" role="tab" id="tab-campaigns" aria-selected="false" aria-controls="view-campaigns" hidden>Campaigns</button>
+      </nav>
+      <div class="field" id="radarField">
+        <label class="label" for="radar">Campaign</label>
+        <select id="radar"></select>
+      </div>
+    </div>
+  </header>
+  <p class="status"><span class="pill warn">Unvalidated classifier</span><span><span id="statusText">Snapshot of the radar
+    database, built </span><time id="gen"></time>.</span><a id="exportCsv" class="btn ghost small-btn" hidden>Export CSV</a><button class="btn ghost small-btn" id="signout" type="button" hidden>Sign out</button></p>
+
+  <div id="view-stats" role="tabpanel" aria-labelledby="tab-stats" class="view">
+  <section class="stats" aria-label="Summary" id="stats"></section>
+
+  <section class="charts">
+    <div class="panel">
+      <div class="panel-head"><h2>Leads by platform</h2>
+        <div class="legend"><span><i class="t-high"></i>High</span><span><i class="t-medium"></i>Medium</span><span><i class="t-low"></i>Low</span></div></div>
+      <div class="hbars" id="byPlatform"></div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Leads per run</h2><span class="small label">Click a column to filter</span></div>
+      <div class="cols"><div class="yaxis" id="yaxis"></div><div class="plot" id="perRun"></div></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="leadsTitle">
+    <div class="panel-head"><h2 id="leadsTitle">Leads</h2><span class="label" id="leadCount"></span></div>
+    <div class="filters">
+      <div class="field"><span class="label">Tier</span><div class="chips" id="tiers"></div></div>
+      <div class="field"><label class="label" for="platform">Platform</label><select id="platform"></select></div>
+      <div class="field"><label class="label" for="run">Run</label><select id="run"></select></div>
+      <div class="field grow"><label class="label" for="q">Search</label>
+        <input type="search" id="q" placeholder="Need, quote, author or post text"></div>
+    </div>
+    <div class="leads" id="leads"></div>
+    <button class="btn more" id="more" hidden>Show more</button>
+  </section>
+
+  <section class="panel" aria-labelledby="runsTitle">
+    <div class="panel-head"><h2 id="runsTitle">Run log</h2><span class="label">Newest first · click a row to see its leads</span></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Started (UTC)</th><th>Campaign</th><th>Fetched</th><th>Classified</th><th>High</th><th>Med</th><th>Low</th>
+        <th>Sellers</th><th>Job leads</th><th>Credits</th><th>Cost</th><th>Errors</th></tr></thead>
+      <tbody id="runs"></tbody>
+    </table></div>
+  </section>
+
+  </div>
+
+  <div id="view-jobs" role="tabpanel" aria-labelledby="tab-jobs" class="view" hidden>
+  <section class="panel" aria-labelledby="jobsLeadsTitle">
+    <div class="panel-head"><h2 id="jobsLeadsTitle">Job leads</h2><span class="label" id="jobCount"></span></div>
+    <p class="hint">Businesses posting work your offer could do. A job lead is a direct employer with high or medium fit;
+      staffing agencies, recruiters and reposts are shown but never treated as leads.</p>
+    <div class="filters">
+      <div class="field"><span class="label">Fit</span><div class="chips" id="fits"></div></div>
+      <div class="field"><label class="label" for="board">Board</label><select id="board"></select></div>
+      <div class="field"><label class="label" for="employer">Employer</label><select id="employer">
+        <option value="">Any</option><option value="direct">Direct</option><option value="staffing">Staffing</option>
+        <option value="recruiter">Recruiter</option><option value="relay">Repost / relay</option><option value="unknown">Unknown</option></select></div>
+      <label class="check" for="leadsOnly"><input type="checkbox" id="leadsOnly" checked> Leads only</label>
+      <div class="field grow"><label class="label" for="jq">Search</label>
+        <input type="search" id="jq" placeholder="Role, company, need or listing text"></div>
+    </div>
+    <div class="leads" id="jobLeads"></div>
+    <button class="btn more" id="jobMore" hidden>Show more</button>
+  </section>
+  </div>
+
+  <div id="view-programs" role="tabpanel" aria-labelledby="tab-programs" class="view" hidden>
+    <section class="stats" aria-label="Affiliate programs summary" id="progStats"></section>
+
+    <section class="charts">
+      <div class="panel">
+        <div class="panel-head"><h2>Companies by platform</h2><span class="small label">Verified programs</span></div>
+        <div class="hbars" id="progPlatforms"></div>
+      </div>
+      <div class="panel" aria-labelledby="progRunTitle">
+        <div class="panel-head"><h2 id="progRunTitle">Find more</h2><span class="label" id="progRunNote"></span></div>
+        <p class="hint">Searches platform portals and niche affiliate pages for new companies (1 ScrapeCreators credit per
+          search, within the daily cap), then checks each new site for its program. Nothing is contacted.</p>
+        <div class="actions"><label class="label" for="progSearches">Searches</label>
+          <select id="progSearches"><option value="100">100</option><option value="200" selected>200</option>
+            <option value="400">400</option></select>
+          <button class="btn primary" id="progRun" type="button">Find more companies</button>
+          <button class="btn ghost" id="progSignals" type="button">Check for new signals now</button></div>
+        <p class="hint" id="progDaily"></p>
+        <p class="msg" id="progMsg" role="status" hidden></p>
+        <div class="jlist" id="progRuns"></div>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="listTitle">
+      <div class="panel-head"><h2 id="listTitle">Top lists</h2><span class="label" id="listCount"></span></div>
+      <div class="filters">
+        <div class="field"><span class="label">List</span><div class="chips" id="listPick" role="group" aria-label="Which list">
+          <button class="chip" type="button" data-list="affiliate" aria-pressed="true">Growing their affiliate program</button>
+          <button class="chip" type="button" data-list="finance" aria-pressed="false">Finance: business funding</button></div></div>
+        <label class="check" for="listNew"><input type="checkbox" id="listNew"> New today only</label>
+        <a class="btn ghost small-btn" id="listCsv" href="/api/programs/leads.csv?list=affiliate">Download this list</a>
+      </div>
+      <p class="hint" id="listHint"></p>
+      <div class="leads" id="listItems"></div>
+      <button class="btn more" id="listMore" hidden>Show more</button>
+    </section>
+
+    <section class="panel" aria-labelledby="progTitle">
+      <div class="panel-head"><h2 id="progTitle">Companies with an affiliate program</h2><span class="label" id="progCount"></span></div>
+      <p class="hint">Each company was verified from its own site (platform portal link,
+        tracking script, or an affiliate page with commission terms) or from its marketplace listing. Score = fit:
+        paid platform, few partners, hiring an affiliate manager.</p>
+      <div class="filters">
+        <div class="field"><label class="label" for="progPlatform">Platform</label><select id="progPlatform"></select></div>
+        <div class="field"><label class="label" for="progSegment">Segment</label><select id="progSegment"></select></div>
+        <div class="field"><label class="label" for="progMin">Score</label><select id="progMin">
+          <option value="0">Any</option><option value="55">55+</option><option value="70">70+</option><option value="80">80+</option></select></div>
+        <div class="field grow"><label class="label" for="pq">Search</label>
+          <input type="search" id="pq" placeholder="Company, domain, commission or tag"></div>
+      </div>
+      <div class="leads" id="progList"></div>
+      <button class="btn more" id="progMore" hidden>Show more</button>
+    </section>
+  </div>
+
+  <div id="view-campaigns" role="tabpanel" aria-labelledby="tab-campaigns" class="view" hidden>
+    <section class="stats" aria-label="Credits" id="creditStrip"></section>
+
+    <section class="panel" aria-labelledby="newTitle">
+      <div class="panel-head"><h2 id="newTitle">New campaign</h2><span class="label" id="formMode">Step 1 of 2 · describe it</span></div>
+      <form id="cform" class="cform" novalidate>
+        <div class="field span2"><label class="label" for="c-offer">What are people asking for?</label>
+          <textarea id="c-offer" rows="2" placeholder="e.g. a bookkeeper for a small trades business in New Zealand"></textarea></div>
+        <div class="field span2"><label class="label" for="c-context">Who you are (optional)</label>
+          <input id="c-context" placeholder="e.g. bookkeeping firm for NZ tradies"></div>
+        <div class="field"><label class="label" for="c-name">Campaign name</label>
+          <input id="c-name" placeholder="made from the request if left empty"></div>
+        <div class="field"><label class="label" for="c-days">First run looks back</label>
+          <select id="c-days"><option value="1">1 day</option><option value="2">2 days</option>
+            <option value="3" selected>3 days</option><option value="7">7 days</option><option value="14">14 days</option></select></div>
+        <label class="check span2" for="c-daily"><input type="checkbox" id="c-daily" checked> Run it every day (each daily run looks back 2 days and adds only new posts)</label>
+        <div class="actions span2"><button class="btn primary" id="c-draft" type="submit">Draft search plan</button>
+          <span class="hint">Drafting uses a few cents of model time and no search credits.</span></div>
+      </form>
+
+      <div id="plan" class="plan" hidden>
+        <div class="panel-head"><h3>Search plan</h3><span class="label" id="planNote"></span></div>
+        <p class="hint" id="p-buyer"></p>
+        <details><summary>What counts as a lead</summary><ul class="needs" id="p-needs"></ul></details>
+        <p class="hint">Search terms per platform, one per line, at most 8 each. First-person asks ("need more clients") find buyers; how-to phrases find tutorials.</p>
+        <label class="check" for="p-boards"><input type="checkbox" id="p-boards"> Also search job boards
+          (OnlineJobs.ph, We Work Remotely, Freelancer, Indeed): businesses hiring for this work. Uses the job titles under
+          onlinejobs and indeed. Indeed is paid (capped per day); the others are free.</label>
+        <div class="terms" id="p-terms"></div>
+        <div class="cform">
+          <div class="field"><label class="label" for="p-subs">Subreddits to watch</label><textarea id="p-subs" rows="4"></textarea></div>
+          <div class="field"><label class="label" for="p-negative">Skip posts containing</label><textarea id="p-negative" rows="4"></textarea></div>
+          <div class="field span2"><label class="label" for="p-sellers">Seller signals (marks people selling, not buying)</label><textarea id="p-sellers" rows="4"></textarea></div>
+        </div>
+        <div class="actions"><button class="btn primary" id="p-run" type="button">Save and run now</button>
+          <button class="btn" id="p-save" type="button">Save without running</button>
+          <button class="btn ghost" id="p-cancel" type="button">Cancel</button>
+          <span class="hint" id="p-estimate"></span></div>
+      </div>
+      <p class="msg" id="p-msg" role="status" hidden></p>
+    </section>
+
+    <section class="panel" aria-labelledby="clistTitle">
+      <div class="panel-head"><h2 id="clistTitle">Campaigns</h2><span class="label" id="ccount"></span></div>
+      <div class="clist" id="clist"></div>
+    </section>
+
+
+    <section class="panel" aria-labelledby="jobsTitle">
+      <div class="panel-head"><h2 id="jobsTitle">Activity</h2><span class="label">One run at a time · updates on its own</span></div>
+      <div class="jlist" id="jlist"></div>
+    </section>
+  </div>
+
+  <section aria-labelledby="cavTitle" style="display:grid;gap:8px">
+    <h2 id="cavTitle">Read before acting</h2>
+    <ul class="caveats" id="caveats"></ul>
+  </section>
+</div>
+
+<dialog class="card" id="cardDlg" aria-labelledby="cardTitle">
+  <div class="card-body">
+    <div class="card-head"><h2 id="cardTitle">Contact card</h2><button class="btn ghost small-btn" id="cardClose" type="button">Close</button></div>
+    <p class="hint" id="cardNote"></p>
+    <div id="cardRows"></div>
+    <p class="hint">Found by Data Box from public sources; emails checked with Reacher. Read the post before reaching out.</p>
+  </div>
+</dialog>
+
+<script id="radar-data" type="application/json">/*__DATA__*/null</script>
+<script>
+(() => {
+  const LIVE = /*__LIVE__*/false;
+  let D = JSON.parse(document.getElementById("radar-data").textContent) || {radars: [], runs: [], leads: [], listings: [], caveats: []};
+  const TIERS = ["high", "medium", "low"], PAGE = 40;
+  const $ = id => document.getElementById(id);
+  const el = (tag, attrs = {}, ...kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v);
+    }
+    for (const k of kids) if (k != null) n.append(k);
+    return n;
+  };
+  const fmtDate = (iso, withTime) => {
+    if (!iso) return "date unknown";
+    const d = new Date(iso); if (isNaN(d)) return iso.slice(0, 10);
+    const o = {day: "numeric", month: "short", year: "numeric", timeZone: "UTC"};
+    if (withTime) Object.assign(o, {hour: "2-digit", minute: "2-digit", hour12: false});
+    return d.toLocaleString("en-GB", o);
+  };
+  const money = v => "$" + (v < 1 ? v.toFixed(3) : v.toFixed(2));
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const safeUrl = u => /^https?:\/\//i.test(u || "") ? u : null;
+
+  const S = {radar: "", tiers: new Set(TIERS), platform: "", run: "", q: "", shown: PAGE};
+  const J = {fits: new Set(TIERS), board: "", employer: "", leadsOnly: true, q: "", shown: PAGE};
+  const BOARD = {onlinejobs: "OnlineJobs.ph", weworkremotely: "We Work Remotely", freelancer: "Freelancer", indeed: "Indeed"};
+  const BADGE = {verified: "Verified email", accept_all: "Accept-all email", not_found: "No email found",
+                 pending: "Contact pending", unresolvable: "Unresolvable", failed: "Lookup failed"};
+  const FIELD = {name: "Name", company: "Company", email: "Email", phone: "Phone", linkedin_url: "LinkedIn", website: "Website"};
+  const VERDICT = {deliverable: "deliverable", accept_all: "accept-all domain (can't confirm the mailbox)",
+                   unknown: "couldn't verify", undeliverable: "undeliverable"};
+  const REASON = {max_per_run: "waiting: per-run limit reached", daily_budget: "waiting: today's enrichment budget is used",
+                  credit_cap: "waiting: daily credit cap", databox_budget: "waiting: Data Box budget used for today",
+                  data_box_not_configured: "waiting: Data Box isn't connected yet", verify_quota: "waiting: email check quota",
+                  provider_down: "waiting: a provider was down", "no name or company": "no name or company to go on",
+                  "no domain, LinkedIn or company": "no website, LinkedIn or company to go on"};
+  function contactBadge(key) {
+    const c = key && (D.contacts || {})[key];
+    if (!c) return null;
+    const b = el("button", {class: "cbadge " + c.badge, type: "button", text: BADGE[c.badge] || c.badge});
+    b.addEventListener("click", () => openCard(c));
+    return b;
+  }
+  function openCard(c) {
+    $("cardNote").textContent = [BADGE[c.badge], REASON[c.reason] || c.reason, c.updated_at ? "updated " + fmtDate(c.updated_at) : ""]
+      .filter(Boolean).join(" · ");
+    const rows = $("cardRows"); rows.replaceChildren();
+    const row = (label, value, sub, link) => {
+      const copy = el("button", {class: "btn ghost small-btn", type: "button", text: "Copy"});
+      copy.addEventListener("click", () => { try { navigator.clipboard.writeText(value); copy.textContent = "Copied"; } catch (e) {} });
+      const v = link && safeUrl(value) ? el("a", {class: "v", href: value, target: "_blank", rel: "noopener noreferrer", text: value})
+                                       : el("span", {class: "v", text: value});
+      rows.append(el("div", {class: "card-row"}, el("span", {class: "label", text: label}), v, copy,
+        sub ? el("span", {class: "s", text: sub}) : null));
+    };
+    for (const [k, f] of Object.entries(c.fields || {})) {
+      const sub = [f.verdict ? VERDICT[f.verdict] || f.verdict : "", f.source ? "from " + f.source : "",
+                   f.confidence != null ? "confidence " + Number(f.confidence).toFixed(2) : ""].filter(Boolean).join(" · ");
+      row(FIELD[k] || k, String(f.value), sub, k === "linkedin_url" || k === "website");
+    }
+    for (const a of c.alt_emails || []) row("Other email", a, "not confirmed as the main address");
+    for (const [p, u] of Object.entries(c.socials || {})) row(cap(p), u, "", true);
+    if (!rows.children.length) rows.append(el("p", {class: "empty", text: "Nothing found yet."}));
+    $("cardDlg").showModal();
+  }
+  const EMPLOYER = {direct: "Direct employer", staffing: "Staffing agency", recruiter: "Recruiter", relay: "Repost / relay", unknown: "Employer unclear"};
+  try { S.radar = localStorage.getItem("lr.radar") || ""; } catch (e) {}
+  const rs = $("radar");
+
+  function applyData(next) {
+    D = Object.assign({radars: [], runs: [], leads: [], listings: [], caveats: []}, next || {});
+    const latest = D.runs[D.runs.length - 1];
+    if (S.radar && S.radar !== "*" && !D.radars.some(r => r.name === S.radar)) S.radar = "";
+    if (!S.radar) S.radar = latest ? latest.radar : (D.radars[0] ? D.radars[0].name : "*");
+    $("gen").textContent = fmtDate(D.generated_at, true) + " UTC";
+    $("gen").setAttribute("datetime", D.generated_at || "");
+    rs.replaceChildren();
+    if (D.radars.length > 1) rs.append(el("option", {value: "*", text: "All campaigns"}));
+    for (const r of D.radars) rs.append(el("option", {value: r.name, text: r.name}));
+    rs.value = S.radar;
+    $("caveats").replaceChildren(...D.caveats.map(c => el("li", {text: c})));
+  }
+
+  const inRadar = x => S.radar === "*" || x.radar === S.radar;
+  const runsIn = () => D.runs.filter(inRadar);
+  const leadsIn = () => D.leads.filter(inRadar);
+  const matches = (l, ignoreTier) => (ignoreTier || S.tiers.has(l.tier)) && (!S.platform || l.platform === S.platform)
+    && (!S.run || l.run === S.run)
+    && (!S.q || [l.need, l.quote, l.author, l.excerpt].join(" ").toLowerCase().includes(S.q));
+
+  function renderHeader() {
+    const r = D.radars.find(x => x.name === S.radar);
+    if (LIVE) $("exportCsv").href = !$("view-programs").hidden ? "/api/programs.csv"
+      : "/api/export.csv" + (r ? "?campaign=" + encodeURIComponent(r.name) : "");
+    $("query").textContent = r ? "“" + r.query + "”" : D.radars.length + " campaigns";
+  }
+
+  function renderStats() {
+    const runs = runsIn(), leads = leadsIn();
+    const n = t => leads.filter(l => l.tier === t).length;
+    const credits = runs.reduce((a, r) => a + r.credits, 0);
+    const cost = runs.reduce((a, r) => a + r.cost_usd, 0), cc = runs.reduce((a, r) => a + r.credits_usd, 0);
+    const box = $("stats"); box.replaceChildren();
+    const stat = (label, big, small, extra) => box.append(el("div", {class: "stat"},
+      el("span", {class: "label", text: label}), el("span", {class: "big", text: big}), extra || null,
+      small ? el("span", {class: "small", text: small}) : null));
+    const split = el("div", {class: "split", "aria-hidden": "true"});
+    for (const t of TIERS) if (leads.length) split.append(el("span", {class: "t-" + t, style: `width:${n(t) / leads.length * 100}%`}));
+    stat("Leads", String(leads.length), `${n("high")} high · ${n("medium")} medium · ${n("low")} low`, split);
+    stat("Runs", String(runs.length), runs.length ? "last " + fmtDate(runs[runs.length - 1].started_at) : "none yet");
+    stat("Credits used", credits.toLocaleString("en-US"), "ScrapeCreators");
+    stat("Spend", money(cost), `${money(cc)} credits + ${money(Math.max(cost - cc, 0))} models`);
+    stat("Cost per lead", leads.length ? money(cost / leads.length) : "–", "total spend ÷ leads");
+  }
+
+  function renderPlatforms() {
+    const box = $("byPlatform"); box.replaceChildren();
+    const by = {};
+    for (const l of leadsIn().filter(l => matches(l, false))) {
+      (by[l.platform] = by[l.platform] || {high: 0, medium: 0, low: 0})[l.tier]++;
+    }
+    const rows = Object.entries(by).map(([p, c]) => [p, c, c.high + c.medium + c.low]).sort((a, b) => b[2] - a[2]);
+    if (!rows.length) { box.append(el("p", {class: "empty", text: "No leads match the current filters."})); return; }
+    const max = rows[0][2];
+    for (const [p, c, total] of rows) {
+      const track = el("div", {class: "track", role: "img",
+        "aria-label": `${p}: ${c.high} high, ${c.medium} medium, ${c.low} low`});
+      for (const t of TIERS) if (c[t]) track.append(el("span", {class: "t-" + t, style: `width:${c[t] / max * 100}%`, title: `${cap(t)}: ${c[t]}`}));
+      box.append(el("div", {class: "hbar"}, el("span", {text: p}), track, el("span", {class: "n num", text: String(total)})));
+    }
+  }
+
+  function renderPerRun() {
+    const plot = $("perRun"), y = $("yaxis"); plot.replaceChildren(); y.replaceChildren();
+    const runs = runsIn();
+    if (!runs.length) { plot.append(el("p", {class: "empty", text: "No runs yet."})); return; }
+    const tot = r => r.high + r.medium + r.low;
+    const max = Math.max(1, ...runs.map(tot));
+    const top = max <= 4 ? max : Math.ceil(max / 2) * 2;
+    y.append(el("span", {text: String(top)}), el("span", {text: String(top / 2)}), el("span", {text: "0"}));
+    const every = Math.max(1, Math.ceil(runs.length / 8));
+    runs.forEach((r, i) => {
+      const col = el("div", {class: "col" + (S.run === r.id ? " on" : ""), role: "button", tabindex: "0",
+        title: `${fmtDate(r.started_at, true)} · ${r.radar}\n${r.high} high, ${r.medium} medium, ${r.low} low`,
+        "aria-label": `Run ${fmtDate(r.started_at)}: ${tot(r)} leads. Filter leads to this run.`});
+      for (const t of ["low", "medium", "high"]) if (r[t]) col.append(el("span", {class: "t-" + t, style: `height:${r[t] / top * 100}%`}));
+      if (i % every === 0 || i === runs.length - 1) {
+        const d = new Date(r.started_at);
+        col.append(el("span", {class: "x", text: isNaN(d) ? "" : d.toLocaleDateString("en-GB", {day: "numeric", month: "short", timeZone: "UTC"})}));
+      }
+      const pick = () => setRun(S.run === r.id ? "" : r.id);
+      col.addEventListener("click", pick);
+      col.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+      plot.append(col);
+    });
+  }
+
+  function renderFilters() {
+    const leads = leadsIn();
+    const tiers = $("tiers"); tiers.replaceChildren();
+    for (const t of TIERS) {
+      const b = el("button", {class: "chip", type: "button", "aria-pressed": String(S.tiers.has(t))},
+        el("i", {class: "t-" + t, style: "width:9px;height:9px;border-radius:2px;display:inline-block"}),
+        cap(t), el("span", {class: "num", text: String(leads.filter(l => l.tier === t && matches(l, true)).length)}));
+      b.addEventListener("click", () => { S.tiers.has(t) ? S.tiers.delete(t) : S.tiers.add(t); S.shown = PAGE; update(); });
+      tiers.append(b);
+    }
+    const ps = $("platform"), plats = [...new Set(leads.map(l => l.platform))].sort();
+    if (S.platform && !plats.includes(S.platform)) S.platform = "";
+    ps.replaceChildren(el("option", {value: "", text: "All platforms"}), ...plats.map(p => el("option", {value: p, text: p})));
+    ps.value = S.platform;
+    const rsel = $("run"), runs = runsIn().slice().reverse();
+    if (S.run && !runs.some(r => r.id === S.run)) S.run = "";
+    rsel.replaceChildren(el("option", {value: "", text: "All runs"}),
+      ...runs.map(r => el("option", {value: r.id, text: `${fmtDate(r.started_at, true)} · ${r.high + r.medium + r.low} leads`})));
+    rsel.value = S.run;
+  }
+
+  function renderLeads() {
+    const list = leadsIn().filter(l => matches(l, false));
+    $("leadCount").textContent = `${list.length} shown`;
+    const box = $("leads"); box.replaceChildren();
+    if (!list.length) box.append(el("p", {class: "empty", text: leadsIn().length
+      ? "No leads match these filters. Clear the search or turn a tier back on."
+      : "No leads for this radar yet. Run scripts/radar_daily.sh, then rebuild the dashboard."}));
+    for (const l of list.slice(0, S.shown)) {
+      const url = safeUrl(l.url);
+      const foot = el("div", {class: "foot"},
+        l.author ? el("span", {text: "@" + l.author.replace(/^@/, "")}) : null,
+        el("span", {text: `decided by ${l.decided_by} · confidence ${l.confidence.toFixed(2)}`}),
+        el("span", {text: "urgency " + l.urgency}),
+        url ? el("a", {href: url, target: "_blank", rel: "noopener noreferrer", text: "Open post ↗"}) : null,
+        contactBadge(l.contact));
+      const det = l.excerpt ? el("details", {}, el("summary", {text: "Post text"}), el("p", {text: l.excerpt})) : null;
+      box.append(el("article", {class: "lead"},
+        el("div", {class: "meta"}, el("span", {class: "tier " + l.tier, text: l.tier}),
+          el("span", {text: l.platform}), el("time", {datetime: l.posted_at || "", text: fmtDate(l.posted_at)})),
+        el("div", {}, el("h3", {text: l.need}), el("blockquote", {text: "“" + l.quote + "”"}), det, foot)));
+    }
+    const more = $("more"); more.hidden = list.length <= S.shown;
+    more.textContent = `Show ${Math.min(PAGE, list.length - S.shown)} more`;
+  }
+
+  function renderRuns() {
+    const body = $("runs"); body.replaceChildren();
+    const td = (v, cls) => el("td", {class: "num" + (v === 0 ? " zero" : "") + (cls ? " " + cls : ""), text: String(v)});
+    for (const r of runsIn().slice().reverse()) {
+      const tr = el("tr", {class: S.run === r.id ? "on" : "", tabindex: "0"},
+        el("td", {text: fmtDate(r.started_at, true)}), el("td", {text: r.radar}),
+        td(r.fetched), td(r.classified), td(r.high), td(r.medium), td(r.low), td(r.sellers), td(r.job_leads || 0), td(r.credits),
+        el("td", {class: "num", text: money(r.cost_usd)}), td(r.errors));
+      const pick = () => { setRun(S.run === r.id ? "" : r.id); $("leadsTitle").scrollIntoView({block: "start"}); };
+      tr.addEventListener("click", pick);
+      tr.addEventListener("keydown", e => { if (e.key === "Enter") pick(); });
+      body.append(tr);
+    }
+  }
+
+  const listingsIn = () => (D.listings || []).filter(inRadar).filter(l => !S.run || l.run === S.run);
+  const jobMatches = (l, ignoreFit) => (ignoreFit || J.fits.has(l.fit)) && (!J.board || l.board === J.board)
+    && (!J.employer || l.employer === J.employer) && (!J.leadsOnly || l.lead)
+    && (!J.q || [l.role, l.company, l.need, l.quote, l.excerpt].join(" ").toLowerCase().includes(J.q));
+
+  function renderJobFilters() {
+    const all = listingsIn();
+    const fits = $("fits"); fits.replaceChildren();
+    for (const t of TIERS) {
+      const b = el("button", {class: "chip", type: "button", "aria-pressed": String(J.fits.has(t))},
+        el("i", {class: "t-" + t, style: "width:9px;height:9px;border-radius:2px;display:inline-block"}),
+        cap(t), el("span", {class: "num", text: String(all.filter(l => l.fit === t && jobMatches(l, true)).length)}));
+      b.addEventListener("click", () => { J.fits.has(t) ? J.fits.delete(t) : J.fits.add(t); J.shown = PAGE; renderJobLeads(); });
+      fits.append(b);
+    }
+    const bs = $("board"), boards = [...new Set(all.map(l => l.board))].sort();
+    if (J.board && !boards.includes(J.board)) J.board = "";
+    bs.replaceChildren(el("option", {value: "", text: "All boards"}), ...boards.map(b => el("option", {value: b, text: BOARD[b] || b})));
+    bs.value = J.board;
+  }
+
+  function renderJobLeads() {
+    renderJobFilters();
+    const list = listingsIn().filter(l => jobMatches(l, false));
+    $("jobCount").textContent = `${list.length} shown`;
+    const box = $("jobLeads"); box.replaceChildren();
+    if (!list.length) box.append(el("p", {class: "empty", text: listingsIn().length
+      ? "No job listings match these filters. Untick “Leads only” to see staffing agencies and weaker fits."
+      : "No job listings for this campaign yet. Turn on job boards in the campaign's plan, then run it."}));
+    for (const l of list.slice(0, J.shown)) {
+      const url = safeUrl(l.url);
+      const facts = [l.company || "Company not named", EMPLOYER[l.employer] || l.employer, l.pay, l.job_type, l.location]
+        .filter(Boolean).join(" · ");
+      const foot = el("div", {class: "foot"}, el("span", {text: facts}),
+        url ? el("a", {href: url, target: "_blank", rel: "noopener noreferrer", text: "Open listing ↗"}) : null,
+        contactBadge(l.contact));
+      const det = l.excerpt ? el("details", {}, el("summary", {text: "Listing text"}), el("p", {text: l.excerpt})) : null;
+      box.append(el("article", {class: "lead", "data-id": l.id},
+        el("div", {class: "meta"}, el("span", {class: "tier " + l.fit, text: l.fit}),
+          el("span", {text: BOARD[l.board] || l.board}), el("time", {datetime: l.posted_at || "", text: fmtDate(l.posted_at)})),
+        el("div", {}, el("h3", {text: l.role + (l.need ? " — " + l.need : "")}),
+          l.quote ? el("blockquote", {text: "“" + l.quote + "”"}) : null, det, foot)));
+    }
+    const more = $("jobMore"); more.hidden = list.length <= J.shown;
+    more.textContent = `Show ${Math.min(PAGE, list.length - J.shown)} more`;
+  }
+
+  function setRun(id) { S.run = id; S.shown = PAGE; update(); }
+  function update() { renderHeader(); renderStats(); renderFilters(); renderPlatforms(); renderPerRun(); renderLeads(); renderRuns(); renderJobLeads(); }
+
+  rs.addEventListener("change", () => {
+    S.radar = rs.value; S.run = ""; S.platform = ""; S.shown = PAGE;
+    try { localStorage.setItem("lr.radar", S.radar); } catch (e) {}
+    update();
+  });
+  $("platform").addEventListener("change", e => { S.platform = e.target.value; S.shown = PAGE; update(); });
+  $("run").addEventListener("change", e => setRun(e.target.value));
+  $("q").addEventListener("input", e => { S.q = e.target.value.trim().toLowerCase(); S.shown = PAGE; renderLeads(); renderPlatforms(); renderFilters(); });
+  $("more").addEventListener("click", () => { S.shown += PAGE; renderLeads(); });
+  $("board").addEventListener("change", e => { J.board = e.target.value; J.shown = PAGE; renderJobLeads(); });
+  $("employer").addEventListener("change", e => { J.employer = e.target.value; J.shown = PAGE; renderJobLeads(); });
+  $("leadsOnly").addEventListener("change", e => { J.leadsOnly = e.target.checked; J.shown = PAGE; renderJobLeads(); });
+  $("jq").addEventListener("input", e => { J.q = e.target.value.trim().toLowerCase(); J.shown = PAGE; renderJobLeads(); });
+  $("jobMore").addEventListener("click", () => { J.shown += PAGE; renderJobLeads(); });
+  $("tab-stats").addEventListener("click", () => showTab("stats"));
+  $("tab-jobs").addEventListener("click", () => showTab("jobs"));
+  $("cardClose").addEventListener("click", () => $("cardDlg").close());
+  $("cardDlg").addEventListener("click", e => { if (e.target === $("cardDlg")) $("cardDlg").close(); });
+  // ---- Campaigns (hosted server only) ---------------------------------------------------------------------
+  const STATUS_TEXT = {queued: "Queued", running: "Running", done: "Done", failed: "Failed",
+                       interrupted: "Interrupted", skipped: "Skipped"};
+  const P = {brief: null, editing: null, busy: false};
+  let pollTimer = null, lastActive = 0;
+
+  async function api(path, opts = {}) {
+    const r = await fetch(path, Object.assign({headers: {"content-type": "application/json"}}, opts));
+    if (r.status === 401) { location.href = "/login"; throw new Error("Signed out"); }
+    let body = {};
+    try { body = await r.json(); } catch (e) {}
+    if (!r.ok) throw new Error(body.error || `Request failed (${r.status})`);
+    return body;
+  }
+
+  function showTab(name) {
+    for (const t of ["stats", "jobs", "programs", "campaigns"]) {
+      $("view-" + t).hidden = t !== name;
+      $("tab-" + t).setAttribute("aria-selected", String(t === name));
+    }
+    $("radarField").hidden = name === "campaigns" || name === "programs";
+    if (LIVE) { if (name === "programs") { $("exportCsv").href = "/api/programs.csv"; loadPrograms(); } else renderHeader(); }
+    try { localStorage.setItem("lr.tab", name); } catch (e) {}
+  }
+
+  // ---- Affiliate programs (hosted server only) -------------------------------------------------------------
+  const PG = {data: null, platform: "", segment: "", min: 0, q: "", shown: PAGE, loading: false};
+  const SEGMENT = {saas: "SaaS", ecommerce: "E-commerce", info: "Info / coaching", unknown: "Unclassified"};
+  const SOURCE = {"partnerstack-marketplace": "PartnerStack marketplace", serp: "search"};
+  const scoreTier = s => s >= 75 ? "high" : s >= 55 ? "medium" : "low";
+
+  async function loadPrograms() {
+    if (PG.loading) return;
+    PG.loading = true;
+    try { PG.data = await api("/api/programs"); renderPrograms(); }
+    catch (e) { $("progCount").textContent = "Couldn't load: " + e.message; }
+    finally { PG.loading = false; }
+  }
+
+  const progMatches = c => (!PG.platform || c.platforms.includes(PG.platform)) && (!PG.segment || c.segment === PG.segment)
+    && c.score >= PG.min && (!PG.q || [c.name, c.domain, c.commission_text, c.offer, (c.tags || []).join(" ")]
+      .join(" ").toLowerCase().includes(PG.q));
+
+  function renderPrograms() {
+    const d = PG.data; if (!d) return;
+    const all = d.companies, sum = d.summary || {}, st = sum.by_status || {};
+    const box = $("progStats"); box.replaceChildren();
+    const stat = (label, big, small) => box.append(el("div", {class: "stat"}, el("span", {class: "label", text: label}),
+      el("span", {class: "big", text: big}), small ? el("span", {class: "small", text: small}) : null));
+    const seg = sum.by_segment || {};
+    stat("Verified programs", all.length.toLocaleString("en-US"),
+         `${(st.no_program || 0).toLocaleString("en-US")} checked with no program`);
+    stat("SaaS", String(seg.saas || 0), "PartnerStack, Rewardful, FirstPromoter…");
+    stat("E-commerce", String(seg.ecommerce || 0), "impact, Awin, UpPromote, Refersion…");
+    stat("Info / coaching", String(seg.info || 0), "mostly in-house programs");
+    stat("Still to check", String((st.pending || 0) + (st.unreachable || 0)),
+         `${st.unreachable || 0} blocked plain requests`);
+
+    const pbox = $("progPlatforms"); pbox.replaceChildren();
+    const plats = Object.entries(sum.by_platform || {}).sort((a, b) => b[1] - a[1]).slice(0, 12);
+    const max = plats.length ? plats[0][1] : 1;
+    for (const [p, n] of plats) {
+      const track = el("div", {class: "track", role: "img", "aria-label": `${p}: ${n}`},
+        el("span", {class: "t-high", style: `width:${n / max * 100}%`}));
+      const row = el("div", {class: "hbar", role: "button", tabindex: "0", title: "Filter to " + p},
+        el("span", {text: p}), track, el("span", {class: "n num", text: String(n)}));
+      const pick = () => { PG.platform = PG.platform === p ? "" : p; PG.shown = PAGE; renderPrograms(); };
+      row.addEventListener("click", pick);
+      row.addEventListener("keydown", e => { if (e.key === "Enter") pick(); });
+      pbox.append(row);
+    }
+    if (!plats.length) pbox.append(el("p", {class: "empty", text: "No verified programs yet."}));
+
+    const ps = $("progPlatform");
+    ps.replaceChildren(el("option", {value: "", text: "All platforms"}),
+      ...Object.keys(sum.by_platform || {}).sort().map(p => el("option", {value: p, text: p})));
+    ps.value = PG.platform;
+    const ss = $("progSegment");
+    ss.replaceChildren(el("option", {value: "", text: "All segments"}),
+      ...Object.keys(seg).sort().map(k => el("option", {value: k, text: SEGMENT[k] || k})));
+    ss.value = PG.segment;
+
+    const list = all.filter(progMatches);
+    $("progCount").textContent = `${list.length.toLocaleString("en-US")} shown`;
+    const lbox = $("progList"); lbox.replaceChildren();
+    if (!list.length) lbox.append(el("p", {class: "empty", text: all.length
+      ? "No companies match these filters." : "No verified companies yet. Use “Find more companies”."}));
+    for (const c of list.slice(0, PG.shown)) {
+      const site = safeUrl("https://" + c.domain), prog = safeUrl(c.program_url);
+      const foot = el("div", {class: "foot"},
+        c.partner_count != null ? el("span", {text: `${c.partner_count.toLocaleString("en-US")} partners on PartnerStack`}) : null,
+        el("span", {text: "found via " + (c.found_via || []).map(s => SOURCE[s] || s).join(", ")}),
+        c.hiring_signal ? el("span", {text: "hiring: " + c.hiring_signal}) : null,
+        prog ? el("a", {href: prog, target: "_blank", rel: "noopener noreferrer", text: "Program page ↗"}) : null,
+        site ? el("a", {href: site, target: "_blank", rel: "noopener noreferrer", text: c.domain + " ↗"}) : null);
+      const ev = (c.evidence || []).map(e => `${e.platform} ${e.kind}: ${e.match}`).join("\n");
+      const det = ev ? el("details", {}, el("summary", {text: "Evidence"}), el("p", {text: ev, style: "white-space:pre-wrap"})) : null;
+      const quote = c.commission_text || c.offer;
+      lbox.append(el("article", {class: "lead"},
+        el("div", {class: "meta"}, el("span", {class: "tier " + scoreTier(c.score), text: "score " + c.score}),
+          el("span", {text: c.platforms.join(" + ")}), el("span", {text: SEGMENT[c.segment] || c.segment})),
+        el("div", {}, el("h3", {text: c.name || c.domain}),
+          quote ? el("blockquote", {text: "“" + quote + "”"}) : null,
+          c.tags && c.tags.length ? el("p", {class: "hint", text: c.tags.join(" · ")}) : null, det, foot)));
+    }
+    const more = $("progMore"); more.hidden = list.length <= PG.shown;
+    more.textContent = `Show ${Math.min(PAGE, list.length - PG.shown)} more`;
+    renderLists();
+    renderProgramRuns();
+  }
+
+  const LT = {list: "affiliate", newOnly: false, shown: 25};
+  const LIST_HINT = {
+    affiliate: "Companies running an affiliate/partner program with a dated reason to call now: Meta ads recruiting affiliates, hiring an affiliate manager, affiliate staff, posts about the program on LinkedIn, Instagram, TikTok, YouTube, Reddit and founder communities. US only; no agencies, affiliate software, recruiters, gambling, adult, forex or crypto trading.",
+    finance: "US business-funding companies (MCA, SBA, equipment, working capital). All prime; ranked first by an ISO / broker / referral partner program on their own site, then recent posts and direct funders. Lead vendors and your own funding partners are left out."};
+  const SIG = {job: "Hiring", affiliate_staff: "Affiliate staff", company_post: "Company post", person_post: "Post",
+               partner_program: "ISO/broker program", decision_maker: "Decision-maker", lookalike: "Lookalike",
+               paid_ad: "Recruiting ad", social_post: "Post", community_post: "Thread"};
+  const PLAT = {linkedin: "LinkedIn", job_board: "Job board", web: "Website", meta_ads: "Meta ads", instagram: "Instagram",
+                threads: "Threads", facebook: "Facebook", tiktok: "TikTok", youtube: "YouTube", reddit: "Reddit",
+                hackernews: "Hacker News", indiehackers: "Indie Hackers", producthunt: "Product Hunt", builtin: "Built In",
+                indeed: "Indeed", upwork: "Upwork", timeinbusiness: "Time in Business", shopify: "Shopify Community", google: "Web"};
+
+  function renderLists() {
+    const d = PG.data; if (!d || !d.lists) return;
+    const L = d.lists[LT.list] || {leads: [], total: 0, new_today: 0};
+    for (const b of $("listPick").querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.list === LT.list));
+    $("listCsv").href = "/api/programs/leads.csv?list=" + LT.list;
+    $("listHint").textContent = LIST_HINT[LT.list];
+    const today = new Date().toISOString().slice(0, 10);
+    const isNew = r => (r.first_seen || "").slice(0, 10) >= today || (r.last_signal || "").slice(0, 10) >= today;
+    const list = L.leads.filter(r => !LT.newOnly || isNew(r));
+    $("listCount").textContent = `${L.total.toLocaleString("en-US")} companies · ${L.new_today} new today`;
+    const box = $("listItems"); box.replaceChildren();
+    if (!list.length) box.append(el("p", {class: "empty", text: LT.newOnly ? "Nothing new today yet." : "No companies on this list yet."}));
+    list.slice(0, LT.shown).forEach((r, i) => {
+      const sigs = el("ul", {class: "sigs"});
+      for (const s of r.signals) {
+        const u = safeUrl(s.url);
+        sigs.append(el("li", {}, el("span", {class: "plat", text: PLAT[s.platform] || s.platform || "LinkedIn"}), " ",
+          el("strong", {text: (SIG[s.kind] || s.kind) + (s.signal_date ? " · " + fmtDate(s.signal_date) : "") + ": "}),
+          el("span", {text: (s.quote || "").slice(0, 180)}), " ",
+          u ? el("a", {href: u, target: "_blank", rel: "noopener noreferrer", text: "open ↗"}) : null,
+          s.person_name && safeUrl(s.person_url) ? el("a", {href: s.person_url, target: "_blank", rel: "noopener noreferrer", text: " · " + s.person_name + " ↗"}) : null));
+      }
+      const facts = [r.hq, r.size, r.industry, (r.platforms || []).join(" + "),
+                     r.partner_count != null ? `${r.partner_count} partners` : null].filter(Boolean).join(" · ");
+      const li = safeUrl(r.linkedin_url), prog = safeUrl(r.program_url), site = safeUrl("https://" + r.domain);
+      box.append(el("article", {class: "lead"},
+        el("div", {class: "meta"}, el("span", {class: "tier " + scoreTier(r.score), text: `#${i + 1} · ${r.score}`}),
+          el("span", {text: r.list === "finance" ? "finance" : "affiliate"})),
+        el("div", {}, el("h3", {text: r.name}), el("p", {class: "hint", text: r.why || ""}),
+          r.commission_text ? el("blockquote", {text: "“" + r.commission_text + "”"}) : null, sigs,
+          el("div", {class: "foot"}, el("span", {text: facts}),
+            site ? el("a", {href: site, target: "_blank", rel: "noopener noreferrer", text: r.domain + " ↗"}) : null,
+            li ? el("a", {href: li, target: "_blank", rel: "noopener noreferrer", text: "LinkedIn ↗"}) : null,
+            prog ? el("a", {href: prog, target: "_blank", rel: "noopener noreferrer", text: "Program ↗"}) : null))));
+    });
+    const more = $("listMore"); more.hidden = list.length <= LT.shown;
+    more.textContent = `Show ${Math.min(25, list.length - LT.shown)} more`;
+  }
+
+  function renderProgramRuns() {
+    const runs = (PG.data && PG.data.runs) || [], box = $("progRuns"); box.replaceChildren();
+    const active = runs.some(r => r.status === "queued" || r.status === "running");
+    $("progRun").disabled = active; $("progRun").textContent = active ? "Running…" : "Find more companies";
+    $("progSignals").disabled = active;
+    const dl = (PG.data && PG.data.daily) || {};
+    $("progDaily").textContent = dl.on
+      ? `Every day the radar checks job boards, LinkedIn posts and funder sites for new signals (up to ${dl.credits} credits), and new companies land in the top lists. Agents can pull them from /api/programs/leads.`
+      : "The daily signal check is off (RADAR_PROGRAMS_DAILY=0).";
+    const c = (PG.data && PG.data.credits) || {};
+    $("progRunNote").textContent = `credits today ${(c.today || 0).toLocaleString("en-US")} / ${(c.cap || 0).toLocaleString("en-US")}`;
+    if (!runs.length) { box.append(el("p", {class: "empty", text: "Not run from the dashboard yet."})); return; }
+    for (const r of runs.slice(0, 5)) {
+      const when = r.finished_at || r.started_at || r.created_at;
+      box.append(el("article", {class: "job"},
+        el("span", {class: "jstatus " + r.status, text: STATUS_TEXT[r.status] || r.status}),
+        el("div", {class: "job-main"}, el("strong", {text: (r.kind === "growth" ? (r.trigger === "daily" ? "Daily signals" : "Signals") : "Discovery")
+          + ` · up to ${r.max_searches} credits`}),
+          el("span", {class: "meta", text: [fmtDate(when, true) + " UTC", `${r.credits_used} credits`].join(" · ")}),
+          r.note ? el("span", {class: "meta", text: r.note}) : null,
+          r.log ? el("details", {}, el("summary", {text: "Log"}), el("pre", {text: r.log})) : null)));
+    }
+    if (active) { clearTimeout(PG.timer); PG.timer = setTimeout(() => { if (!$("view-programs").hidden) loadPrograms(); }, 5000); }
+  }
+
+  function initPrograms() {
+    $("tab-programs").hidden = false;
+    $("tab-programs").addEventListener("click", () => showTab("programs"));
+    $("progPlatform").addEventListener("change", e => { PG.platform = e.target.value; PG.shown = PAGE; renderPrograms(); });
+    $("progSegment").addEventListener("change", e => { PG.segment = e.target.value; PG.shown = PAGE; renderPrograms(); });
+    $("progMin").addEventListener("change", e => { PG.min = +e.target.value; PG.shown = PAGE; renderPrograms(); });
+    $("pq").addEventListener("input", e => { PG.q = e.target.value.trim().toLowerCase(); PG.shown = PAGE; renderPrograms(); });
+    $("progMore").addEventListener("click", () => { PG.shown += PAGE; renderPrograms(); });
+    for (const b of $("listPick").querySelectorAll("button"))
+      b.addEventListener("click", () => { LT.list = b.dataset.list; LT.shown = 25; renderLists(); });
+    $("listNew").addEventListener("change", e => { LT.newOnly = e.target.checked; LT.shown = 25; renderLists(); });
+    $("listMore").addEventListener("click", () => { LT.shown += 25; renderLists(); });
+    $("progRun").addEventListener("click", async () => {
+      const m = $("progMsg");
+      $("progRun").disabled = true;
+      try {
+        const res = await api("/api/programs/run", {method: "POST", body: JSON.stringify({max_searches: +$("progSearches").value})});
+        m.textContent = res.run.already_queued ? "A run is already going." : "Queued. It searches first, then checks each new site.";
+        m.classList.remove("bad");
+      } catch (e) { m.textContent = e.message; m.classList.add("bad"); }
+      m.hidden = false;
+      await loadPrograms();
+    });
+    $("progSignals").addEventListener("click", async () => {
+      const m = $("progMsg");
+      $("progSignals").disabled = true;
+      try {
+        const res = await api("/api/programs/run", {method: "POST", body: JSON.stringify({kind: "growth", max_searches: 300})});
+        m.textContent = res.run.already_queued ? "A run is already going." : "Queued. It looks for new hiring, posts and funder programs from the last 3 days.";
+        m.classList.remove("bad");
+      } catch (e) { m.textContent = e.message; m.classList.add("bad"); }
+      m.hidden = false;
+      await loadPrograms();
+    });
+  }
+
+  function renderCredits() {
+    const c = D.credits || {};
+    const box = $("creditStrip"); box.replaceChildren();
+    const item = (label, value, small) => box.append(el("div", {class: "stat"},
+      el("span", {class: "label", text: label}), el("span", {class: "big", text: value}),
+      small ? el("span", {class: "small", text: small}) : null));
+    item("Credit balance", c.balance == null ? "–" : c.balance.toLocaleString("en-US"), "ScrapeCreators, checked every 10 min");
+    item("Used today", `${(c.today || 0).toLocaleString("en-US")} / ${(c.cap || 0).toLocaleString("en-US")}`,
+         "Runs stop being started once the daily cap is reached");
+    const en = D.enrich || {};
+    item("Contact cards today", en.on === false ? "off" : `${money(en.today_usd || 0)} / ${money(en.daily_usd || 0)}`,
+         en.configured ? `Data Box enrich · up to ${en.max_per_run} per run · cards kept ${en.retention_days} days`
+                       : "Data Box isn't connected yet: resolvable leads wait as Pending");
+    const daily = (D.campaigns || []).filter(x => x.daily && x.active).length;
+    item("Daily campaigns", String(daily), `Each daily run looks back ${c.daily_days || 2} days and adds only new posts`);
+  }
+
+  function renderCampaignList() {
+    const box = $("clist"); box.replaceChildren();
+    const list = D.campaigns || [];
+    $("ccount").textContent = `${list.length} campaigns`;
+    if (!list.length) { box.append(el("p", {class: "empty", text: "No campaigns yet. Describe one above to start."})); return; }
+    const running = new Set((D.jobs || []).filter(j => j.status === "queued" || j.status === "running").map(j => j.campaign));
+    for (const c of list) {
+      const daily = el("input", {type: "checkbox", id: "daily-" + c.name});
+      daily.checked = c.daily;
+      daily.addEventListener("change", async () => {
+        try { await api(`/api/campaigns/${encodeURIComponent(c.name)}`, {method: "PATCH", body: JSON.stringify({daily: daily.checked})});
+              await refresh(); }
+        catch (e) { daily.checked = !daily.checked; flash(e.message, true); }
+      });
+      const run = el("button", {class: "btn primary", type: "button", text: running.has(c.name) ? "Running…" : "Run now"});
+      run.disabled = running.has(c.name) || !c.brief_version;
+      run.addEventListener("click", async () => {
+        run.disabled = true; run.textContent = "Queued…";
+        try { await api(`/api/campaigns/${encodeURIComponent(c.name)}/run`, {method: "POST", body: "{}"}); await refreshJobs(); }
+        catch (e) { flash(e.message, true); run.disabled = false; run.textContent = "Run now"; }
+      });
+      const edit = el("button", {class: "btn", type: "button", text: "Edit plan"});
+      edit.addEventListener("click", () => editCampaign(c.name));
+      const view = el("button", {class: "btn ghost", type: "button", text: "View leads"});
+      view.addEventListener("click", () => { S.radar = c.name; S.run = ""; S.platform = ""; rs.value = c.name; update(); showTab("stats"); });
+      const total = c.high + c.medium + c.low;
+      box.append(el("article", {class: "camp"},
+        el("div", {class: "camp-main"},
+          el("h3", {text: c.name}), el("p", {class: "q", text: "“" + c.query + "”"}),
+          el("p", {class: "meta", text: [c.brief_version ? `plan v${c.brief_version}` : "no plan yet",
+            `${c.runs} hosted run${c.runs === 1 ? "" : "s"}`,
+            (c.platforms || []).join(", "), `${c.credits.toLocaleString("en-US")} credits`,
+            c.job_boards ? `job boards on · ${c.job_leads || 0} job leads` : "job boards off",
+            c.last_run ? "last hosted run " + fmtDate(c.last_run) : "no hosted runs"].join(" · ")})),
+        el("div", {class: "camp-leads", "aria-label": `${total} leads`},
+          el("span", {class: "big num", text: String(total)}), el("span", {class: "small", text: `${c.high} high · ${c.medium} med · ${c.low} low`})),
+        el("div", {class: "camp-actions"},
+          el("label", {class: "check", for: "daily-" + c.name}, daily, "Daily"), run, edit, view)));
+    }
+  }
+
+  function renderJobs() {
+    const box = $("jlist"); box.replaceChildren();
+    const list = D.jobs || [];
+    if (!list.length) { box.append(el("p", {class: "empty", text: "Nothing has run from the dashboard yet."})); return; }
+    for (const j of list) {
+      const when = j.finished_at || j.started_at || j.created_at;
+      const bits = j.kind === "enrich" ? ["contact cards", fmtDate(when, true) + " UTC"]
+        : [j.trigger === "daily" ? "daily run" : "manual run", `${j.days}-day window`, fmtDate(when, true) + " UTC"];
+      if (j.credits != null) bits.push(`${j.credits} credits`);
+      if (j.leads != null) bits.push(`${j.leads} social leads`);
+      if (j.job_leads != null) bits.push(`${j.job_leads} job leads`);
+      const row = el("article", {class: "job"},
+        el("span", {class: "jstatus " + j.status, text: STATUS_TEXT[j.status] || j.status}),
+        el("div", {class: "job-main"}, el("strong", {text: j.campaign}), el("span", {class: "meta", text: bits.join(" · ")}),
+          j.note ? el("span", {class: "meta", text: j.note}) : null,
+          j.log ? el("details", {}, el("summary", {text: "Log"}), el("pre", {text: j.log})) : null));
+      box.append(row);
+    }
+  }
+
+  function renderCampaigns() { renderCredits(); renderCampaignList(); renderJobs(); }
+
+  function flash(text, bad) { const m = $("p-msg"); m.textContent = text; m.classList.toggle("bad", !!bad); m.hidden = !text; }
+
+  function lines(v) { return v.split("\n").map(s => s.trim()).filter(Boolean); }
+
+  function showPlan(brief, editing) {
+    P.brief = brief; P.editing = editing;
+    $("plan").hidden = false;
+    $("planNote").textContent = editing ? `Editing ${editing}` : "Step 2 of 2 · review, then run";
+    $("p-buyer").textContent = brief.buyer_profile || "";
+    const needs = $("p-needs"); needs.replaceChildren(...(brief.need_statements || []).map(n => el("li", {text: n})));
+    const terms = $("p-terms"); terms.replaceChildren();
+    $("p-boards").checked = P.jobBoards != null ? P.jobBoards : !!((brief.terms || {}).onlinejobs || []).length;
+    const allTerms = Object.assign({}, brief.terms || {});
+    for (const k of ["onlinejobs", "indeed"]) if (!allTerms[k]) allTerms[k] = [];
+    for (const [platform, list] of Object.entries(allTerms)) {
+      const id = "t-" + platform;
+      const ta = el("textarea", {id, rows: String(Math.max(3, Math.min(8, list.length))), "data-platform": platform});
+      ta.value = list.join("\n");
+      terms.append(el("div", {class: "field"}, el("label", {class: "label", for: id, text: platform}), ta));
+    }
+    $("p-subs").value = ((brief.communities || {}).reddit || []).join("\n");
+    $("p-sellers").value = (brief.seller_signals || []).join("\n");
+    $("p-negative").value = (brief.negative_terms || []).join("\n");
+    $("p-estimate").textContent = (D.credits && D.credits.estimate ? D.credits.estimate : "about 90–140 credits per run") + ".";
+    $("p-run").textContent = editing ? "Save and run now" : "Save and run now";
+    flash("");
+    $("plan").scrollIntoView({block: "start"});
+  }
+
+  function collectBrief() {
+    const b = JSON.parse(JSON.stringify(P.brief));
+    b.terms = {};
+    for (const ta of $("p-terms").querySelectorAll("textarea")) {
+      const t = lines(ta.value);
+      if (t.length > 8) throw new Error(`${ta.dataset.platform}: at most 8 search terms (has ${t.length}).`);
+      if (t.length) b.terms[ta.dataset.platform] = t;
+    }
+    if (!Object.keys(b.terms).length) throw new Error("Add at least one search term.");
+    b.communities = Object.assign({}, b.communities || {}, {reddit: lines($("p-subs").value).map(s => s.replace(/^\/?r\//i, ""))});
+    b.seller_signals = lines($("p-sellers").value);
+    if (b.seller_signals.length < 5) throw new Error("Keep at least 5 seller signals, so sellers aren't counted as leads.");
+    b.negative_terms = lines($("p-negative").value);
+    return b;
+  }
+
+  async function saveCampaign(runNow) {
+    if (P.busy) return;
+    let brief;
+    try { brief = collectBrief(); } catch (e) { flash(e.message, true); return; }
+    P.busy = true; flash(runNow ? "Saving and starting the run…" : "Saving…");
+    try {
+      const res = await api("/api/campaigns", {method: "POST", body: JSON.stringify({
+        new: !P.editing, name: P.editing || $("c-name").value || $("c-offer").value, offer: $("c-offer").value,
+        job_boards: $("p-boards").checked,
+        offer_context: $("c-context").value, days: +$("c-days").value, daily: $("c-daily").checked,
+        run_now: runNow, brief})});
+      flash(runNow ? `Saved ${res.name} (plan v${res.brief_version}). The run is queued; watch it under Activity.`
+                   : `Saved ${res.name} (plan v${res.brief_version}).`);
+      resetForm(false);
+      await refresh();
+    } catch (e) { flash(e.message, true); }
+    finally { P.busy = false; }
+  }
+
+  function resetForm(clearMsg = true) {
+    P.brief = null; P.editing = null; P.jobBoards = null;
+    $("plan").hidden = true;
+    for (const id of ["c-offer", "c-context", "c-name"]) { $(id).value = ""; $(id).disabled = false; }
+    $("c-days").value = "3"; $("c-daily").checked = true;
+    $("formMode").textContent = "Step 1 of 2 · describe it";
+    $("c-draft").hidden = false;
+    if (clearMsg) flash("");
+  }
+
+  async function editCampaign(name) {
+    try {
+      const c = await api(`/api/campaigns/${encodeURIComponent(name)}`);
+      if (!c.brief) throw new Error("This campaign has no search plan yet.");
+      $("c-offer").value = c.offer; $("c-offer").disabled = true;
+      $("c-context").value = c.offer_context; $("c-context").disabled = true;
+      $("c-name").value = c.name; $("c-name").disabled = true;
+      $("c-days").value = String(c.days); $("c-daily").checked = c.daily;
+      P.jobBoards = !!c.job_boards;
+      $("formMode").textContent = "Editing an existing campaign";
+      $("c-draft").hidden = true;
+      showPlan(c.brief, c.name);
+    } catch (e) { flash(e.message, true); }
+  }
+
+  async function refresh() {
+    const next = await api("/api/data");
+    applyData(next); update(); renderCampaigns(); schedulePoll();
+  }
+
+  async function refreshJobs() {
+    const res = await api("/api/jobs");
+    const active = res.jobs.filter(j => j.status === "queued" || j.status === "running").length;
+    D.jobs = res.jobs; D.credits = Object.assign({}, D.credits, res.credits);
+    if (active < lastActive) { await refresh(); return; }  // a run just finished: reload leads and stats
+    lastActive = active;
+    renderCampaigns(); schedulePoll();
+  }
+
+  function schedulePoll() {
+    clearTimeout(pollTimer);
+    lastActive = (D.jobs || []).filter(j => j.status === "queued" || j.status === "running").length;
+    pollTimer = setTimeout(() => { if (!document.hidden) refreshJobs().catch(() => schedulePoll()); else schedulePoll(); },
+                           lastActive ? 4000 : 30000);
+  }
+
+  function initCampaigns() {
+    $("tabs").hidden = false;
+    $("tab-campaigns").hidden = false;
+    $("signout").hidden = false;
+    $("exportCsv").hidden = false;
+    $("statusText").textContent = "Live from the Railway database. Loaded ";
+    $("tab-campaigns").addEventListener("click", () => showTab("campaigns"));
+    initPrograms();
+    $("signout").addEventListener("click", async () => { await fetch("/api/logout", {method: "POST"}); location.href = "/login"; });
+    $("cform").addEventListener("submit", async e => {
+      e.preventDefault();
+      if (P.busy) return;
+      const offer = $("c-offer").value.trim();
+      if (offer.length < 3) { flash("Describe what people are asking for.", true); $("c-offer").focus(); return; }
+      P.busy = true; $("c-draft").disabled = true; $("c-draft").textContent = "Drafting…";
+      flash("Drafting the search plan. This takes about a minute.");
+      try {
+        const res = await api("/api/campaigns/draft", {method: "POST",
+          body: JSON.stringify({offer, offer_context: $("c-context").value})});
+        if (!$("c-name").value) $("c-name").value = res.suggested_name;
+        showPlan(res.brief, null);
+      } catch (err) { flash(err.message, true); }
+      finally { P.busy = false; $("c-draft").disabled = false; $("c-draft").textContent = "Draft search plan"; }
+    });
+    $("p-run").addEventListener("click", () => saveCampaign(true));
+    $("p-save").addEventListener("click", () => saveCampaign(false));
+    $("p-cancel").addEventListener("click", () => resetForm());
+    document.addEventListener("visibilitychange", () => { if (!document.hidden) refreshJobs().catch(() => {}); });
+    let tab = ["#campaigns", "#programs"].includes(location.hash) ? location.hash.slice(1) : "";
+    if (!tab) { try { tab = localStorage.getItem("lr.tab") || ""; } catch (e) {} }
+    showTab(["campaigns", "jobs", "programs"].includes(tab) ? tab : "stats");
+  }
+
+  if (LIVE) {
+    initCampaigns();
+    refresh().catch(e => { $("statusText").textContent = "Couldn't load data: " + e.message; });
+  } else {
+    applyData(D); update();
+    if ((D.listings || []).length) $("tabs").hidden = false;  // static snapshot: Stats + Job leads
+  }
+})();
+</script>

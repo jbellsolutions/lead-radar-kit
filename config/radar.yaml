@@ -1,0 +1,106 @@
+# Lead Radar v2 config. Secrets are NOT here; see .env.local / environment (config.py SECRET_ALIASES).
+state_dir: ~/.lead-radar
+
+models:
+  # Chosen 2026-09-28. OpenRouter ids; prices per 1M tokens (in/out) from the catalog that day.
+  provider: openrouter
+  reasoning: openai/gpt-6-luna-pro          # "Luma 6 Pro" — expander + Stage 2
+  reasoning_fallback: openai/gpt-6-luna
+  cheap: z-ai/glm-5.3-flash                 # openers
+  listings: openai/gpt-6-luna-pro           # job-listing fit (contracts/listing-fit.v1.json)
+  prices_per_mtok:
+    openai/gpt-6-luna-pro: { in: 0.10, out: 0.50 }
+    openai/gpt-6-luna: { in: 0.10, out: 0.50 }
+    z-ai/glm-5.3-flash: { in: 0.15, out: 0.50 }
+
+jev:
+  endpoint: https://api.typesafe.ai/v1/systemone
+  model: jev-1.13.0           # TypeSafe model id (system-one-workers .env.example); env TYPESAFE_MODEL overrides
+  contract: contracts/lead-intent.v1.json
+  accept_confidence: 0.8
+  calibration_first_n: 50
+  concurrency: 8
+  cost_per_call_usd: null    # TypeSafe price not published to us; usage is recorded, cost reported as unknown
+
+defaults:
+  lookback_days: 14
+  max_terms_per_platform: 8
+  max_pages_per_term: 2
+  comments_top_n: 5
+  concurrency: 10
+  languages: [en]
+  min_text_chars: 20
+  freshness_high_max_days: 14
+
+scrapecreators:
+  base_url: https://api.scrapecreators.com
+  timeout_seconds: 60
+  retries_on_5xx: 2
+  credit_usd: 0.00188         # conservative replacement value per credit (old radar), for cost reporting only
+
+listings:                     # job boards (kind "job"); classified by classify/listings.py, never by the M3 cascade
+  concurrency: 6
+  onlinejobs: { max_pages: 3, max_detail_pages: 40 }          # robots Crawl-delay 5s; ~40 detail pages per run
+  weworkremotely: { categories: [remote-customer-support-jobs, remote-sales-and-marketing-jobs,
+                                 remote-management-and-finance-jobs, all-other-remote-jobs] }
+  freelancer: { max_pages: 2, categories: [virtual-assistant, lead-generation, data-entry] }
+  indeed:                     # via Data Box job_board (Apify), paid
+    daily_usd: 2              # RADAR_LISTINGS_DAILY_USD overrides
+    max_queries: 3
+    max_items_per_query: 25
+    max_cost_per_query_usd: 0.25
+    country: US
+    location: null
+
+browser:
+  accounts:                   # names only; credentials live in Browser Box
+    skool: skool-radar-1
+    facebook: fb-radar-1
+    x: x-radar-1
+    linkedin: li-radar-1
+  rate_limits_per_hour:
+    skool: 30
+    facebook: 20
+    x: 40
+    linkedin: 15
+
+communities:                  # human-approved only; the browser lane never scrapes unlisted groups
+  skool: []
+  facebook: []
+  reddit: []
+
+outputs:
+  csv_dir: ~/.lead-radar/exports
+  slack_channel: "#lead-radar"
+  sheet_id: null
+  ghl: { enabled: false, pipeline: null }   # not built in v2 (decision 2026-09-28)
+  drop_sellers: true                        # decision 2026-09-28: sellers are counted, never listed
+
+scoring:
+  tier_weights: { high: 1.0, medium: 0.6, low: 0.2 }
+  recency_half_life_days: 7
+  engagement: { log_base: 10, cap: 2.0 }    # factor = min(cap, 1 + log_base(1 + interactions) / 4)
+
+qc:
+  sample_rate: 0.10
+
+programs:                     # program lane: companies already running an affiliate program (radar programs ...)
+  # Portal pages on affiliate platforms; each hit is a company slug, resolved to its own domain. Verified live 2026-10-06.
+  portal_dorks:
+    - site:getrewardful.com -www -help
+    - site:partnerstack.com -inurl:dash -inurl:www -inurl:support -inurl:market
+    - site:af.uppromote.com
+    - site:goaffpro.com -www -help -docs
+    - site:refersion.com -www -marketplace -statuspage
+    - site:tapfiliate.com -www
+    - site:firstpromoter.com -www
+    - site:tolt.io -www
+    - site:promotekit.com -www
+    - '"campaign-promo-signup" site:app.impact.com'
+  # Google stops paginating early, so each template runs once per niche to reach deeper.
+  niche_dorks:
+    - '"affiliate program" "commission" {niche} inurl:affiliates'
+    - '"join our affiliate program" {niche}'
+  niches: [coaching, course, membership, funding, "credit repair", "real estate", supplements, skincare, apparel,
+           fitness, pets, "home decor", jewelry, coffee, software, saas, ai, marketing, "email marketing", crm,
+           hosting, finance, insurance, travel, education, health, beauty, outdoor, baby, gaming]

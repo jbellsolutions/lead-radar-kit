@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "credits_charged": 1,
+  "cursor": "2",
+  "posts": [
+    {
+      "url": "https://www.linkedin.com/posts/pat-example_we-just-launched-our-affiliate-program-activity-7511000000000000001-AbCd",
+      "activityUrn": "urn:li:activity:7511000000000000001",
+      "description": "We just launched our affiliate program: 30% recurring commission on every sale. Join us today at acme-shop.com/affiliates.",
+      "datePublished": "2026-10-05T14:02:00.000Z",
+      "author": {"name": "Pat Example", "url": "https://www.linkedin.com/in/pat-example", "followers": 1200, "image": ""}
+    },
+    {
+      "url": "https://www.linkedin.com/posts/sam-sample_hello-activity-7511000000000000002-EfGh",
+      "activityUrn": "urn:li:activity:7511000000000000002",
+      "description": "We help brands launch their affiliate program. Book a free call with our agency team.",
+      "datePublished": "2026-10-04T09:30:00.000Z",
+      "author": {"name": "Sam Sample", "url": "https://www.linkedin.com/in/sam-sample", "followers": 800, "image": ""}
+    },
+    {
+      "url": "https://www.linkedin.com/posts/acme-careers_hiring-activity-7511000000000000003-IjKl",
+      "activityUrn": "urn:li:activity:7511000000000000003",
+      "description": "We are hiring an affiliate manager for our program.",
+      "datePublished": "2026-10-03T08:00:00.000Z",
+      "author": {"name": "Acme Careers", "url": "https://www.linkedin.com/company/acme-careers", "followers": 5000, "image": ""}
+    }
+  ]
+}

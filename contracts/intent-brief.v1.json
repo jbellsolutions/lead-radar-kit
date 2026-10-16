@@ -1,0 +1,33 @@
+{
+  "name": "intent-brief",
+  "version": "1",
+  "description": "Query expander output (spec §7). Need statements are in the buyer's own words, not marketing words.",
+  "rules": [
+    "need_statements: phrases a buyer would actually write (\"need someone to answer my emails\"), not marketing copy.",
+    "terms: per platform, at most 8, matching how people search there (reddit: questions and 'recommend'; tiktok/instagram: hashtags + phrases; linkedin: 'looking for', 'hiring'; google: site: operators).",
+    "seller_signals: at least 5 phrases that mark a provider or seller.",
+    "communities: suggestions only; the browser lane scrapes only groups listed in radar.yaml or approved by a human."
+  ],
+  "output_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "required": ["offer", "buyer_profile", "need_statements", "high_examples", "medium_examples", "low_examples", "seller_signals", "terms", "communities", "negative_terms"],
+    "properties": {
+      "offer": {"type": "string", "minLength": 1},
+      "buyer_profile": {"type": "string", "minLength": 1},
+      "need_statements": {"type": "array", "minItems": 3, "items": {"type": "string"}},
+      "high_examples": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+      "medium_examples": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+      "low_examples": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+      "seller_signals": {"type": "array", "minItems": 5, "items": {"type": "string"}},
+      "terms": {
+        "type": "object",
+        "propertyNames": {"enum": ["reddit", "youtube", "tiktok", "instagram", "threads", "linkedin", "facebook", "google", "skool", "x", "onlinejobs", "indeed"]},
+        "additionalProperties": {"type": "array", "maxItems": 8, "items": {"type": "string"}}
+      },
+      "communities": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}},
+      "negative_terms": {"type": "array", "items": {"type": "string"}},
+      "proposed_terms": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}}
+    }
+  }
+}
