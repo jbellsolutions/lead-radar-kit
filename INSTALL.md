@@ -185,6 +185,13 @@ computer is off. The free trial gives $5 of credit for 30 days with no card, whi
 trial, the Hobby plan ($5 a month, including $5 of usage) keeps it on. The README covers the Free plan and other
 no-cost options.
 
+**The quickest way, no computer setup at all:** open the [Deploy on Railway](https://railway.com/deploy/Cb06_G?referralCode=Q-Z5pZ&utm_medium=integration&utm_source=button&utm_campaign=lead-radar) link, sign in, paste the two
+keys and click **Deploy**. Railway builds it, adds the `/data` disk and generates the password (the service's
+**Variables → `RADAR_DASHBOARD_PASSWORD`**). Your address is under the service's **Settings → Networking**. A setup
+agent can't do this part, because it needs the person's Railway sign-in and their keys typed into Railway's page.
+
+**From this computer, with the code you just installed:**
+
 1. Install the Railway CLI: `npm i -g @railway/cli` if you have Node, or `brew install railway` on a Mac.
 2. Run `railway login`. It opens the browser, where the person signs up or signs in. A setup agent waits for them.
 3. Deploy. This needs the two required keys in `.env.local`.
@@ -227,7 +234,14 @@ before you open it to the internet.
 
 ## 6. Run your first campaign
 
-This step spends credits, so a setup agent asks first. In the dashboard, open **Campaigns**, then **New campaign**:
+This step spends credits, so a setup agent asks first.
+
+**The quickest start:** your dashboard begins with six example campaigns (a virtual assistant, more leads and
+referrals, an SDR or appointment-setting partner, business funding, homeschool help, and a local trade). None runs by
+itself. In **Campaigns**, click **Run now** on the closest one, or **Edit plan** to adapt it, then tick **Daily** if you
+want it every morning. A run uses roughly 40–140 credits depending on the campaign, so the 100 free ScrapeCreators credits cover about one.
+
+**Your own campaign:** in **Campaigns**, click **New campaign**:
 1. Describe what you sell in a sentence.
 2. Click **Draft search plan**. This costs a few cents of AI and no credits.
 3. Read the plan. The search phrases should sound like a buyer asking for help ("need someone to…"), not like

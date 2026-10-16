@@ -1,27 +1,58 @@
 # Lead Radar
 
-**Find people who are publicly asking for what you sell.**
+**Free leads: find people who are publicly asking for what you sell.**
 
 You describe your offer in plain English, for example "a virtual assistant for small business owners". Lead Radar searches
-Reddit, YouTube, TikTok, Instagram, Threads, LinkedIn, Facebook groups, Google and job boards. AI reads every
-post it finds, and you get a private dashboard of the people asking for help, each with their own words as proof and
-a link to the post.
+Reddit, YouTube, TikTok, Instagram, Threads, LinkedIn, Facebook groups, Google and job boards. AI reads every post it
+finds, and you get a private dashboard of the people asking for help, each with their own words as proof and a link to
+the post.
 
 **It never posts, comments, likes or messages anyone.** You read the leads and decide who to contact. A test in the
 code (`tests/test_no_contact.py`) makes sure of that.
 
-## Install with Claude Code or Codex
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/Cb06_G?referralCode=Q-Z5pZ&utm_medium=integration&utm_source=button&utm_campaign=lead-radar)
+
+Website: **[jbellsolutions.github.io/lead-radar-kit](https://jbellsolutions.github.io/lead-radar-kit/)**
+
+## The checklist: what to get, what to do
+
+### What to get
+
+| | Need it? | Cost | Deal |
+|---|---|---|---|
+| **[ScrapeCreators](https://app.scrapecreators.com) key** | Yes: it does the searching | Free to start, then about $10 per 5,000 credits | **100 free credits** when you sign up, no card: about one free run. The smaller examples (local trade, business funding) use the fewest. |
+| **[OpenRouter](https://openrouter.ai) key** | Yes: the AI that reads posts | Add $5 of credit; each run uses a few cents | No public discount code exists; $5 lasts many runs. |
+| **[Railway](https://railway.com) account** | For the always-on, one-click version | Free trial ($5 of credit, 30 days, no card), then Hobby at $5 a month | Sign up through the **Deploy on Railway** button above for **$20 of Railway credit** under Railway's referral program.* |
+| Claude Code or Codex | Only to install on your own computer instead | Your existing plan | |
+
+\* The Railway button is a referral link: Railway gives you $20 in credit on its terms, and the author earns a
+commission from Railway. It costs you nothing extra.
+
+### What to do (about 10 minutes)
+
+- [ ] **Get your ScrapeCreators key.** Sign up at [app.scrapecreators.com](https://app.scrapecreators.com) and copy
+      the API key from your dashboard.
+- [ ] **Get your OpenRouter key.** Sign up at [openrouter.ai](https://openrouter.ai), add $5 under **Credits**, then
+      create a key at [openrouter.ai/keys](https://openrouter.ai/keys).
+- [ ] **Click [Deploy on Railway](https://railway.com/deploy/Cb06_G?referralCode=Q-Z5pZ&utm_medium=integration&utm_source=button&utm_campaign=lead-radar).** Sign up or sign in (GitHub sign-in is quickest), paste the two keys,
+      and click **Deploy**. Your dashboard password is made for you.
+- [ ] **Open your dashboard.** In Railway, click the service, then **Settings → Networking** shows your
+      `...up.railway.app` address. The password is under **Variables → `RADAR_DASHBOARD_PASSWORD`**.
+- [ ] **Run an example.** Your dashboard starts with six example campaigns: a virtual assistant, more leads and
+      referrals, an SDR or appointment-setting partner, business funding, homeschool help, and a local trade. Click
+      **Run now** on the one closest to you, or click **New campaign** and describe what you sell.
+- [ ] **Turn on Daily** for the campaigns you want every morning (11:00 UTC). Each daily run adds only new posts.
+
+Lead Radar stops at 300 search credits a day by default (`RADAR_DAILY_CREDIT_CAP`), so a mistake can't run up a bill.
+
+### Or install it on your own computer (free)
 
 Paste this repository's link into Claude Code or Codex and say:
 
 > **Install Lead Radar on this computer. Follow INSTALL.md.**
 
-The agent installs it, checks that it works, and asks for your keys one at a time. It then asks where you want Lead
-Radar to run:
-- **on this computer**, which is free;
-- **on Railway**, so it stays on.
-
-**[INSTALL.md](INSTALL.md)** has every step, if you'd rather do it yourself.
+The agent installs it, checks that it works, and asks for your keys one at a time. **[INSTALL.md](INSTALL.md)** has every
+step if you'd rather do it yourself.
 
 ## How it works
 
@@ -38,25 +69,12 @@ Radar to run:
 There's also an optional **program lane** that finds companies running affiliate or referral programs, for
 partnership outreach. It's off unless you turn it on.
 
-## What you need
+Optional extras, none needed:
+- **[TypeSafe](https://typesafe.ai)**, a fast first-pass AI reader.
+- **Slack** notices.
+- Your own **Data Box** ([box-kit](https://github.com/jbellsolutions/box-kit)), for contact cards and Indeed listings.
 
-| | What it's for | Cost |
-|---|---|---|
-| **ScrapeCreators key** ([scrapecreators.com](https://scrapecreators.com)) | Searching the platforms | 100 free credits to start, then about $10 per 5,000. One campaign run uses about 90–140 credits (roughly $0.20–0.30). |
-| **OpenRouter key** ([openrouter.ai](https://openrouter.ai)) | The AI that writes search plans and reads posts | Pay as you go: a few cents per run. Add a few dollars of credit. |
-| A Mac or Linux computer (Windows: use WSL) with **Python 3.12 or newer** and **Git** | Running it | Free. The installer checks for them. |
-
-Optional extras:
-- **TypeSafe**: a fast first-pass AI reader.
-- **Slack**.
-- Your own **Data Box**, from [box-kit](https://github.com/jbellsolutions/box-kit), for contact cards and Indeed job
-  listings.
-
-Lead Radar works without any of these. All keys stay in a private `.env.local` file on your computer, which is
-never uploaded to GitHub.
-
-**Spending guard:** Lead Radar stops at 300 ScrapeCreators credits a day by default (`RADAR_DAILY_CREDIT_CAP`).
-Runs past the cap are skipped and marked as skipped.
+Keys stay in your own Railway variables, or in a private `.env.local` file on your computer that is never uploaded.
 
 ## Where it runs: your computer or Railway
 
@@ -65,8 +83,9 @@ while it's running. If the computer was asleep then, they start when it next run
 
 **Railway (always on).** [Railway](https://railway.com) is a hosting service: it runs your copy of Lead Radar on its
 servers, so the dashboard stays online at its own web address and daily runs happen even when your computer is
-off. You create a Railway account and the install script sets everything up from your computer. You pay Railway for
-what the app uses: it bills by memory, CPU and disk, per second.
+off. The **Deploy on Railway** button sets it up in one click. If you installed on your computer first,
+`scripts/deploy_railway.sh` moves it to Railway. You pay Railway for what the app uses: it bills by memory, CPU and
+disk, per second.
 
 ### Railway at no cost, and what it really costs
 
