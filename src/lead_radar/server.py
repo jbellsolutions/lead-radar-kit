@@ -568,6 +568,43 @@ async def api_save_campaign(request: Request):
     return JSONResponse({"name": name, "brief_version": version, "job": job})
 
 
+EXAMPLES_DIR = REPO_ROOT / "config" / "examples"
+
+
+def seed_examples(st: Store, settings=None) -> list[str]:
+    """First start: add the example campaigns from config/examples, not daily, so a new install isn't empty.
+    Runs once per state folder and only into an empty one: deleting or editing an example never brings it back,
+    and an existing install never gets them. RADAR_EXAMPLES=off skips it."""
+    settings = settings or _settings()
+    marker = settings.state_dir / "examples-seeded.txt"
+    if os.environ.get("RADAR_EXAMPLES", "on").strip().lower() == "off" or marker.exists():
+        return []
+    added = []
+    if not st.list_radars():
+        examples = [json.loads(p.read_text()) for p in EXAMPLES_DIR.glob("*.json")]
+        for ex in sorted(examples, key=lambda e: e.get("order", 99)):
+            contract.validate_intent_brief(ex["brief"])
+            name, boards = slug(ex["name"]), bool(ex.get("job_boards"))
+            radar = Radar(id=uuid.uuid4().hex[:12], name=name, query=ex["offer"],
+                          offer_context=ex.get("offer_context") or None, platforms=platforms_for(boards))
+            radar.platforms = [p for p in ex.get("platforms") or API_PLATFORMS if p in API_PLATFORMS]
+            radar.platforms += list(LISTING_PLATFORMS) if boards else []
+            radar.lookback_days = int(ex.get("days", 3))
+            radar.schedule = None
+            path = settings.state_dir / "briefs" / f"{name}-v1.json"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(ex["brief"], indent=2, ensure_ascii=False))
+            brief = expander.load_brief_file(path, radar.id, 1)
+            st.save_radar(radar)
+            st.save_brief(brief)
+            radar.intent_brief_id = brief.id
+            st.save_radar(radar)
+            added.append(name)
+    marker.parent.mkdir(parents=True, exist_ok=True)
+    marker.write_text(", ".join(added) or "none (the install already had campaigns)")
+    return added
+
+
 @guarded
 async def api_campaign(request: Request):
     name = request.path_params["name"]
@@ -881,6 +918,10 @@ async def api_programs_import(request: Request):
 
 @contextlib.asynccontextmanager
 async def lifespan(app):
+    try:
+        seed_examples(_store())
+    except Exception as exc:  # noqa: BLE001 - a bad example file must not stop the dashboard
+        print(f"example campaigns not added: {exc}", file=sys.stderr)
     WORKER.start()
     DAILY.start()
     yield

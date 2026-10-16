@@ -1,0 +1,128 @@
+{
+  "name": "virtual-assistant",
+  "offer": "a virtual assistant",
+  "offer_context": "Virtual assistant services for small business owners. Buyers ask for a VA, admin help, inbox or calendar help.",
+  "days": 2,
+  "daily": false,
+  "job_boards": true,
+  "platforms": [
+    "reddit",
+    "linkedin",
+    "threads",
+    "google"
+  ],
+  "order": 1,
+  "brief": {
+    "offer": "virtual assistant (remote admin, inbox, calendar, customer support help)",
+    "buyer_profile": "Solo founders, coaches, agency owners and small-business operators drowning in admin who want to hire or find a VA",
+    "need_statements": [
+      "need someone to answer my emails",
+      "looking for a virtual assistant",
+      "need help with scheduling and inbox",
+      "can anyone recommend a good VA",
+      "drowning in admin work",
+      "want to hire a VA but don't know where to start"
+    ],
+    "high_examples": [
+      "Anyone know a good VA? Need someone for inbox and scheduling ASAP.",
+      "Looking for recommendations: we're hiring a part-time virtual assistant for client onboarding."
+    ],
+    "medium_examples": [
+      "Drowning in admin, thinking about hiring help but no idea where to start.",
+      "Comparing Upwork vs an agency for my first virtual assistant."
+    ],
+    "low_examples": [
+      "VAs are the future of small business."
+    ],
+    "seller_signals": [
+      "I'm a VA",
+      "open spots",
+      "DM me for rates",
+      "for hire",
+      "book a discovery call",
+      "hire me",
+      "my services",
+      "accepting new clients",
+      "looking for work",
+      "portfolio"
+    ],
+    "terms": {
+      "reddit": [
+        "\"seeking VA\"",
+        "\"in search of a virtual assistant\"",
+        "\"ISO virtual assistant\"",
+        "\"need help\" \"virtual assistant\" business",
+        "\"looking to hire\" assistant",
+        "\"hiring\" \"marketing assistant\" remote",
+        "\"email management\" assistant needed",
+        "\"calendar management\" help needed"
+      ],
+      "linkedin": [
+        "\"seeking VA\"",
+        "\"in search of a virtual assistant\"",
+        "\"ISO virtual assistant\"",
+        "\"need help\" \"virtual assistant\" business",
+        "\"looking to hire\" assistant",
+        "\"hiring\" \"marketing assistant\" remote",
+        "\"email management\" assistant needed",
+        "\"calendar management\" help needed"
+      ],
+      "threads": [
+        "\"seeking VA\"",
+        "\"in search of a virtual assistant\"",
+        "\"ISO virtual assistant\"",
+        "\"need help\" \"virtual assistant\" business",
+        "\"looking to hire\" assistant",
+        "\"hiring\" \"marketing assistant\" remote",
+        "\"email management\" assistant needed",
+        "\"calendar management\" help needed"
+      ],
+      "google": [
+        "\"seeking VA\"",
+        "\"in search of a virtual assistant\"",
+        "\"ISO virtual assistant\"",
+        "\"need help\" \"virtual assistant\" business"
+      ],
+      "youtube": [],
+      "tiktok": [
+        "ISO virtual assistant"
+      ],
+      "instagram": [
+        "need help virtual assistant business"
+      ],
+      "facebook": [],
+      "onlinejobs": [
+        "virtual assistant",
+        "executive assistant",
+        "admin assistant",
+        "customer support"
+      ],
+      "indeed": [
+        "virtual assistant",
+        "remote executive assistant"
+      ]
+    },
+    "communities": {
+      "reddit": [
+        "smallbusiness",
+        "Entrepreneur"
+      ],
+      "weworkremotely": [
+        "remote-customer-support-jobs",
+        "remote-management-and-finance-jobs",
+        "all-other-remote-jobs"
+      ],
+      "freelancer": [
+        "virtual-assistant",
+        "data-entry"
+      ]
+    },
+    "negative_terms": [
+      "job",
+      "hiring me",
+      "I am a VA",
+      "VA course",
+      "become a virtual assistant"
+    ]
+  }
+}

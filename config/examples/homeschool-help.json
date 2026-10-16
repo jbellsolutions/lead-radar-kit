@@ -1,0 +1,98 @@
+{
+  "name": "homeschool-help",
+  "offer": "homeschool help, curriculum advice or a homeschool group to join in the United States",
+  "offer_context": "Homeschool support for US parents: curriculum advice, tutoring, and local homeschool groups and co-ops.",
+  "days": 3,
+  "daily": false,
+  "job_boards": false,
+  "platforms": [
+    "reddit",
+    "instagram",
+    "tiktok",
+    "facebook",
+    "google"
+  ],
+  "order": 5,
+  "brief": {
+    "offer": "Homeschool help for US families: curriculum advice, tutoring, and local homeschool groups and co-ops.",
+    "buyer_profile": "US parents who are starting or struggling with homeschooling and ask for curriculum help, a tutor, or a group or co-op to join.",
+    "need_statements": [
+      "Looking for a homeschool co-op near me.",
+      "What curriculum should I use for my first year homeschooling?",
+      "Need help homeschooling my child with ADHD.",
+      "Any homeschool groups in our area?",
+      "Thinking of pulling my kid out of school to homeschool. Where do I start?",
+      "Need a tutor for my homeschooled kid in math."
+    ],
+    "high_examples": [
+      "We're new to homeschooling in Texas. Does anyone know a co-op near Austin we could join?",
+      "Can anyone recommend a math curriculum for a struggling 4th grader? We're homeschooling and lost.",
+      "Looking for a homeschool reading tutor. Any recommendations?"
+    ],
+    "medium_examples": [
+      "Thinking about homeschooling next year. How did you get started?",
+      "How do you handle socialization when homeschooling?",
+      "Is an online homeschool program worth it?"
+    ],
+    "low_examples": [
+      "Here is our homeschool room setup!",
+      "Finished our first homeschool year today.",
+      "Field trip to the science museum with the co-op."
+    ],
+    "seller_signals": [
+      "I sell homeschool curriculum",
+      "shop my store",
+      "use my code",
+      "affiliate link",
+      "tutoring spots available",
+      "enroll now",
+      "link in bio",
+      "free printable in my shop"
+    ],
+    "terms": {
+      "reddit": [
+        "\"new to homeschooling\"",
+        "\"homeschool co-op\" near",
+        "\"homeschool curriculum\" recommend",
+        "\"starting homeschool\" help",
+        "\"pulling my kid out\" homeschool",
+        "\"homeschool tutor\""
+      ],
+      "instagram": [
+        "homeschool help",
+        "looking for homeschool group",
+        "#newtohomeschool",
+        "#homeschoolcoop"
+      ],
+      "tiktok": [
+        "new to homeschooling",
+        "homeschool help",
+        "homeschool co op",
+        "first year homeschool"
+      ],
+      "facebook": [
+        "looking for homeschool group",
+        "homeschool co op",
+        "homeschool curriculum help",
+        "new to homeschooling"
+      ],
+      "google": [
+        "\"homeschool\" \"looking for\" site:facebook.com/groups",
+        "\"homeschool co-op\" near site:reddit.com",
+        "\"homeschool curriculum\" help site:reddit.com",
+        "\"new to homeschooling\" site:reddit.com"
+      ]
+    },
+    "communities": {
+      "reddit": [
+        "homeschool"
+      ]
+    },
+    "negative_terms": [
+      "teacher hiring",
+      "curriculum sale",
+      "giveaway",
+      "lesson plan freebie"
+    ]
+  }
+}

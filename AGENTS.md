@@ -75,6 +75,7 @@ State lives in `~/.lead-radar/radar.sqlite`. Set `RADAR_STATE_DIR` to put it els
 | `RADAR_ENRICH_DAILY_USD`, `RADAR_ENRICH_PER_LEAD_USD`, `RADAR_ENRICH_MAX_PER_RUN` | 3, 0.25, 3 | Data Box spend limits |
 | `RADAR_LISTINGS_DAILY_USD` | 2 | Indeed (through Data Box) per day |
 | `RADAR_CONTACT_RETENTION_DAYS` | 90 | Cards are deleted after this |
+| `RADAR_EXAMPLES` | on | A new, empty install gets the example campaigns in `config/examples/` (not daily) on first start; once per state folder. `off` starts empty |
 | `RADAR_PROGRAMS_DAILY` | off | `on` adds the program lane's growth run to each daily trigger |
 | `RADAR_PROGRAMS_DAILY_CREDITS` | 300 | Credits per daily growth run (also within the daily cap) |
 | `BROWSERBOX_URL`, `BROWSERBOX_TOKEN` | unset | Program lane: Browser Box `read` for sites that block plain requests |

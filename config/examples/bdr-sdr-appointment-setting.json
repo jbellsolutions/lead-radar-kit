@@ -1,0 +1,104 @@
+{
+  "name": "bdr-sdr-appointment-setting",
+  "offer": "an outsourced SDR, BDR or appointment-setting partner",
+  "offer_context": "Outsourced outbound prospecting and appointment setting for B2B companies. Buyers are founders and sales leaders who want meetings booked for them.",
+  "days": 3,
+  "daily": false,
+  "job_boards": false,
+  "platforms": [
+    "reddit",
+    "linkedin",
+    "threads",
+    "google"
+  ],
+  "order": 3,
+  "brief": {
+    "offer": "Outsourced SDR, BDR and appointment-setting services that book qualified sales meetings for B2B companies.",
+    "buyer_profile": "Founders, sales leaders and agency owners at B2B companies who want to outsource outbound prospecting or appointment setting, or are asking who to hire for it.",
+    "need_statements": [
+      "Looking for an outsourced SDR team.",
+      "Can anyone recommend an appointment setting agency?",
+      "We need someone to book sales meetings for us.",
+      "Should I hire an SDR or outsource outbound?",
+      "Need a cold calling partner for our B2B sales.",
+      "Who do you use for outbound prospecting?"
+    ],
+    "high_examples": [
+      "Can anyone recommend an outsourced SDR agency that actually books qualified meetings?",
+      "We're looking for an appointment setting partner for our B2B SaaS. Who have you worked with?",
+      "Need a cold calling team to book demos for us. Any recommendations?"
+    ],
+    "medium_examples": [
+      "Thinking about outsourcing outbound instead of hiring our first SDR. Has anyone done this?",
+      "Our founder is still doing all the prospecting. How did you scale outbound?",
+      "Is it worth paying an appointment setting agency per meeting?"
+    ],
+    "low_examples": [
+      "Just hired our second SDR, excited to grow the team.",
+      "Here is the cold email template that got us 30 meetings.",
+      "SDR life is tough some weeks."
+    ],
+    "seller_signals": [
+      "we book meetings for",
+      "our SDR team",
+      "I run an appointment setting agency",
+      "pay per meeting",
+      "DM me for a free trial",
+      "we guarantee meetings",
+      "I'm an appointment setter looking for clients",
+      "open to work",
+      "looking for my next SDR role",
+      "link in bio"
+    ],
+    "terms": {
+      "reddit": [
+        "\"outsourced SDR\"",
+        "\"appointment setting agency\" recommend",
+        "\"outsource cold calling\"",
+        "\"anyone used an SDR agency\"",
+        "\"hire an SDR\" or outsource",
+        "\"outbound agency\" worth it",
+        "\"book meetings for us\"",
+        "\"lead gen agency\" B2B recommend"
+      ],
+      "linkedin": [
+        "\"looking for an appointment setting\"",
+        "\"recommend an SDR agency\"",
+        "\"outsourced SDR\"",
+        "\"looking for an outbound partner\"",
+        "\"need help booking meetings\"",
+        "\"seeking a lead generation partner\""
+      ],
+      "threads": [
+        "need an appointment setter",
+        "outsourced SDR",
+        "looking for an SDR agency",
+        "who books your sales calls"
+      ],
+      "google": [
+        "\"outsourced SDR\" recommend site:reddit.com",
+        "\"appointment setting agency\" site:reddit.com",
+        "\"looking for an SDR agency\" site:linkedin.com/posts",
+        "\"need someone to book meetings\" site:reddit.com",
+        "\"appointment setter\" recommend site:facebook.com/groups",
+        "\"outbound agency\" recommendations site:reddit.com"
+      ]
+    },
+    "communities": {
+      "reddit": [
+        "sales",
+        "SaaS",
+        "startups",
+        "Entrepreneur",
+        "agency"
+      ]
+    },
+    "negative_terms": [
+      "open to work",
+      "my resume",
+      "SDR job",
+      "course",
+      "webinar"
+    ]
+  }
+}

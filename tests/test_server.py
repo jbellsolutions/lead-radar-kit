@@ -510,3 +510,36 @@ def test_a_manual_daily_trigger_counts_for_the_clock(client, monkeypatch):
     _new(client, "daily-one", daily=True)
     client.post("/api/run-daily", headers=_auth())
     assert server.DAILY.tick(datetime.now(timezone.utc)) is None
+
+
+def test_a_new_install_starts_with_the_example_campaigns_not_daily(client, monkeypatch):
+    st = server._store()
+    added = server.seed_examples(st)
+    names = {e.stem for e in server.EXAMPLES_DIR.glob("*.json")}
+    assert set(added) == names and len(added) >= 5
+    page = client.get("/api/data", headers=_auth()).json()
+    assert {c["name"] for c in page["campaigns"]} == names
+    assert not any(c["daily"] for c in page["campaigns"])           # nothing runs or spends by itself
+    va = client.get("/api/campaigns/virtual-assistant", headers=_auth()).json()
+    assert va["job_boards"] and va["brief"]["need_statements"]
+    assert server.seed_examples(st) == []                             # once per state folder
+
+
+def test_examples_never_come_back_or_land_in_an_existing_install(client, monkeypatch, tmp_path):
+    _new(client, "mine", daily=False)
+    assert server.seed_examples(server._store()) == []                # had campaigns: left alone
+    assert [c["name"] for c in client.get("/api/data", headers=_auth()).json()["campaigns"]] == ["mine"]
+    other = tmp_path / "other"
+    monkeypatch.setenv("RADAR_STATE_DIR", str(other))
+    monkeypatch.setenv("RADAR_EXAMPLES", "off")
+    assert server.seed_examples(server._store()) == []
+
+
+def test_every_example_campaign_is_a_valid_search_plan():
+    from lead_radar import contract
+    for path in server.EXAMPLES_DIR.glob("*.json"):
+        ex = json.loads(path.read_text())
+        contract.validate_intent_brief(ex["brief"])
+        assert ex["daily"] is False and ex["name"] == path.stem
+        if ex["job_boards"]:
+            assert ex["brief"]["terms"].get("onlinejobs")

@@ -1,0 +1,93 @@
+{
+  "name": "business-funding",
+  "offer": "business funding or a business loan",
+  "offer_context": "Small business funding: loans, lines of credit, equipment financing and working capital. Buyers are owners who need money for their business.",
+  "days": 3,
+  "daily": false,
+  "job_boards": false,
+  "platforms": [
+    "reddit",
+    "threads",
+    "google"
+  ],
+  "order": 4,
+  "brief": {
+    "offer": "Small business funding: term loans, lines of credit, equipment financing and working capital.",
+    "buyer_profile": "Small business owners who say they need working capital, a loan or financing, or ask where to get funding after a bank said no.",
+    "need_statements": [
+      "I need a business loan.",
+      "Where can I get funding for my small business?",
+      "Need working capital to cover payroll.",
+      "Got denied by the bank, what are my options?",
+      "Looking for equipment financing.",
+      "How do I get a line of credit for my LLC?"
+    ],
+    "high_examples": [
+      "My bank turned down our loan. Can anyone recommend a lender for a small business with two years of revenue?",
+      "Need about $50k in working capital for inventory. Who have you used?",
+      "Looking for equipment financing for a second truck. Any good lenders?"
+    ],
+    "medium_examples": [
+      "Is an SBA loan worth the wait or should I look at alternative lenders?",
+      "Cash flow is tight this quarter. How do other owners bridge the gap?",
+      "What credit score do you need for a business line of credit?"
+    ],
+    "low_examples": [
+      "We just paid off our SBA loan!",
+      "Here is how I bootstrapped my business without funding.",
+      "Interest rates are wild right now."
+    ],
+    "seller_signals": [
+      "we provide business funding",
+      "same-day funding available",
+      "I'm a funding broker",
+      "DM me for a quote",
+      "no credit check required",
+      "apply in minutes",
+      "pre-approved",
+      "link in bio"
+    ],
+    "terms": {
+      "reddit": [
+        "\"need a business loan\"",
+        "\"denied\" \"business loan\"",
+        "\"working capital\" need",
+        "\"small business funding\" recommend",
+        "\"line of credit\" LLC",
+        "\"equipment financing\" recommend",
+        "\"SBA loan\" help",
+        "\"need funding for my business\""
+      ],
+      "threads": [
+        "need a business loan",
+        "small business funding",
+        "need working capital",
+        "business line of credit"
+      ],
+      "google": [
+        "\"need a business loan\" site:reddit.com",
+        "\"working capital\" \"small business\" site:reddit.com",
+        "\"denied\" \"business loan\" site:reddit.com",
+        "\"equipment financing\" recommend site:reddit.com",
+        "\"need funding\" business site:facebook.com/groups",
+        "\"business loan\" recommend site:x.com"
+      ]
+    },
+    "communities": {
+      "reddit": [
+        "smallbusiness",
+        "Entrepreneur",
+        "sweatystartup",
+        "restaurantowners",
+        "Truckers"
+      ]
+    },
+    "negative_terms": [
+      "student loan",
+      "mortgage",
+      "personal loan",
+      "GoFundMe",
+      "crypto"
+    ]
+  }
+}

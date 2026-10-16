@@ -1,0 +1,156 @@
+{
+  "name": "lead-gen-referrals",
+  "offer": "more leads and referrals for my business",
+  "offer_context": "lead generation and referral generation for business owners; buyers are owners or operators asking how to get more leads, clients or referrals, or looking for a provider",
+  "days": 2,
+  "daily": false,
+  "job_boards": true,
+  "platforms": [
+    "reddit",
+    "linkedin",
+    "threads",
+    "google",
+    "tiktok",
+    "instagram"
+  ],
+  "order": 2,
+  "brief": {
+    "offer": "Lead and referral generation for business owners who want more qualified prospects, clients, and customer referrals.",
+    "buyer_profile": "Business owners and operators actively seeking ways to get more leads, clients, or referrals, or asking for a provider to help generate them.",
+    "need_statements": [
+      "I need more leads for my business.",
+      "How are you getting new clients right now?",
+      "I’m looking for someone who can help me get qualified leads.",
+      "Can anyone recommend a good lead generation service?",
+      "I need more referrals for my business. What’s worked for you?",
+      "Where are you finding clients in this industry?",
+      "I’m struggling to get a steady flow of new customers."
+    ],
+    "high_examples": [
+      "Can anyone recommend a lead generation agency for a small business?",
+      "I’m looking for someone to help us get qualified leads. Who have you used?",
+      "Does anyone know a provider who can build a referral program for my business?",
+      "We need more booked appointments for our service business. Any referrals for a reliable lead gen company?",
+      "Looking for help finding new clients for my business—who would you recommend?"
+    ],
+    "medium_examples": [
+      "We’ve tried networking and social media, but leads are still inconsistent. What’s worked for your business?",
+      "How do you get qualified leads without spending a fortune on ads?",
+      "Our referral flow has dried up. How are other owners generating referrals?",
+      "I’m comparing lead generation options for a small service business. What should I consider?",
+      "We get inquiries, but not enough turn into customers. How are you improving lead quality?"
+    ],
+    "low_examples": [
+      "We got a few good leads from a local event last week.",
+      "Word of mouth has been a big part of our growth.",
+      "We’re testing a new way to track referrals.",
+      "Had a busy month with several new clients coming in."
+    ],
+    "seller_signals": [
+      "I run a lead generation agency",
+      "I help businesses get more leads",
+      "DM me for rates",
+      "We have open spots for new clients",
+      "Book a free discovery call",
+      "I offer appointment-setting services",
+      "Our team generates qualified leads for businesses",
+      "Looking for clients for my lead gen service",
+      "done-for-you lead generation",
+      "my agency",
+      "link in bio",
+      "we help businesses get more"
+    ],
+    "terms": {
+      "reddit": [
+        "\"need more clients\"",
+        "\"struggling to get clients\"",
+        "\"how do I get more clients\"",
+        "\"referrals have dried up\"",
+        "\"looking for a lead generation company\"",
+        "\"anyone used a lead gen agency\"",
+        "\"need more leads\"",
+        "\"slow month\" leads business"
+      ],
+      "linkedin": [
+        "\"looking for a lead generation agency\"",
+        "\"recommend an appointment setting\"",
+        "\"need more leads\"",
+        "\"looking for referral partners\"",
+        "\"seeking a lead gen partner\"",
+        "\"outsource lead generation\""
+      ],
+      "threads": [
+        "need more clients",
+        "lead generation help",
+        "need referrals",
+        "how to get clients",
+        "slow sales month"
+      ],
+      "google": [
+        "\"need more clients\" site:reddit.com",
+        "\"recommend a lead generation\" site:reddit.com",
+        "\"need more leads\" site:facebook.com/groups",
+        "\"looking for referrals\" business site:x.com",
+        "\"lead gen agency\" recommendations site:reddit.com",
+        "\"how do I get more clients\" site:skool.com"
+      ],
+      "tiktok": [
+        "how to get more clients",
+        "need more clients"
+      ],
+      "instagram": [
+        "need more clients",
+        "#needmoreclients"
+      ],
+      "youtube": [
+        "how to get more clients for my business"
+      ],
+      "facebook": [],
+      "onlinejobs": [
+        "appointment setter",
+        "lead generation",
+        "cold caller",
+        "sales development representative"
+      ],
+      "indeed": [
+        "appointment setter",
+        "lead generation specialist"
+      ]
+    },
+    "communities": {
+      "reddit": [
+        "smallbusiness",
+        "Entrepreneur",
+        "sales",
+        "marketing",
+        "realtors",
+        "Insurance",
+        "freelance",
+        "agency"
+      ],
+      "weworkremotely": [
+        "remote-sales-and-marketing-jobs"
+      ],
+      "freelancer": [
+        "lead-generation",
+        "telemarketing",
+        "sales"
+      ]
+    },
+    "negative_terms": [
+      "hiring me",
+      "looking for a job",
+      "seeking employment",
+      "freelance work wanted",
+      "resume",
+      "portfolio",
+      "course",
+      "tutorial",
+      "how to become a lead generation specialist",
+      "affiliate program",
+      "I offer lead generation",
+      "DM me for rates",
+      "open spots for clients"
+    ]
+  }
+}

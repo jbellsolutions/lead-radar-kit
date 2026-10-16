@@ -1,0 +1,85 @@
+{
+  "name": "local-drain-repair",
+  "offer": "help with old, blocked or damaged drains in Christchurch and Canterbury NZ",
+  "offer_context": "A local trade example: drain unblocking, repair and camera inspections for homeowners in Christchurch and Canterbury, New Zealand. Swap in your own trade and city.",
+  "days": 14,
+  "daily": false,
+  "job_boards": false,
+  "platforms": [
+    "reddit",
+    "google"
+  ],
+  "order": 6,
+  "brief": {
+    "offer": "Drain unblocking, repair and camera inspections for homeowners in Christchurch and Canterbury, New Zealand.",
+    "buyer_profile": "Homeowners, landlords and property buyers in Christchurch and Canterbury with blocked, slow, smelly or damaged drains, or old clay and earthenware pipes.",
+    "need_statements": [
+      "My drain keeps blocking, who should I call in Christchurch?",
+      "Need a drain camera inspection before buying a house.",
+      "Gurgling drains and a sewer smell in the yard.",
+      "Tree roots in our old clay pipes.",
+      "Recommend a drainlayer in Canterbury?"
+    ],
+    "high_examples": [
+      "Can anyone recommend a good drainlayer in Christchurch? Our drain blocks every few weeks.",
+      "Buying an older house in Canterbury and want the drains checked with a camera. Who do you use?",
+      "Sewer smell in the backyard and the toilet gurgles. Need someone out this week in chch."
+    ],
+    "medium_examples": [
+      "Is it normal for 1950s clay pipes to keep getting tree roots?",
+      "How much does a drain camera inspection usually cost in NZ?",
+      "Should I fix the earthenware drain myself or get a pro?"
+    ],
+    "low_examples": [
+      "Finally got the drains replaced last year, best money we spent.",
+      "Council is digging up our street for new pipes.",
+      "Heavy rain again in Christchurch today."
+    ],
+    "seller_signals": [
+      "we are a drainage company",
+      "call us for a free quote",
+      "our drainlayers",
+      "book online today",
+      "servicing all of Canterbury",
+      "licensed drainlayer here",
+      "DM us"
+    ],
+    "terms": {
+      "reddit": [
+        "earthenware drain (subreddit:chch OR subreddit:christchurch OR subreddit:diynz OR subreddit:newzealand)",
+        "clay pipes (subreddit:chch OR subreddit:christchurch OR subreddit:diynz OR subreddit:newzealand)",
+        "blocked drain (subreddit:chch OR subreddit:christchurch OR subreddit:diynz OR subreddit:newzealand)",
+        "slow draining (subreddit:chch OR subreddit:christchurch OR subreddit:diynz OR subreddit:newzealand)",
+        "gurgling drain (subreddit:chch OR subreddit:christchurch OR subreddit:diynz OR subreddit:newzealand)",
+        "sewer smell (subreddit:chch OR subreddit:christchurch OR subreddit:diynz OR subreddit:newzealand)",
+        "tree roots drain (subreddit:chch OR subreddit:christchurch OR subreddit:diynz OR subreddit:newzealand)",
+        "drain camera (subreddit:chch OR subreddit:christchurch OR subreddit:diynz OR subreddit:newzealand)"
+      ],
+      "google": [
+        "\"earthenware drain\" (\"Christchurch\" OR \"Canterbury NZ\") -UK -England -Hampshire",
+        "\"clay pipes\" (\"Christchurch\" OR \"Canterbury NZ\") -UK -England -Hampshire",
+        "\"blocked drain\" (\"Christchurch\" OR \"Canterbury NZ\") -UK -England -Hampshire",
+        "\"slow draining\" (\"Christchurch\" OR \"Canterbury NZ\") -UK -England -Hampshire",
+        "\"gurgling drain\" (\"Christchurch\" OR \"Canterbury NZ\") -UK -England -Hampshire",
+        "\"sewer smell\" (\"Christchurch\" OR \"Canterbury NZ\") -UK -England -Hampshire",
+        "\"tree roots drain\" (\"Christchurch\" OR \"Canterbury NZ\") -UK -England -Hampshire",
+        "\"drain camera\" (\"Christchurch\" OR \"Canterbury NZ\") -UK -England -Hampshire"
+      ]
+    },
+    "communities": {
+      "reddit": [
+        "chch",
+        "christchurch",
+        "newzealand",
+        "diynz",
+        "NZProperty"
+      ]
+    },
+    "negative_terms": [
+      "council tax",
+      "New Hampshire",
+      "UK",
+      "England"
+    ]
+  }
+}
